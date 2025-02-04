@@ -1,0 +1,9 @@
+#mainNav {
+    width: 100%;
+    padding: 10px 25px;
+}
+.mn_links {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

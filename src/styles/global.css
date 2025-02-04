@@ -1,0 +1,24 @@
+html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body{margin:0;padding:0}ol,ul{list-style:none}a{text-decoration:none;color:inherit}
+
+:root {
+    /* color */
+    --color-primary: #000;
+    --color-secondary: #000;
+    --color-bg: #000;
+    --color-text: #000;
+    --color-accentuation: #000;
+    /* font */
+    --font-title: ;
+    --font-text: ;
+    /* fz */
+    --fz-h1: 64px;
+    --fz-h2: 50px;
+    --fz-h3: 48px;
+    --fz-h4: 36px;
+    --fz-h5: 32px;
+    --fz-h6: 24px;
+    --fz-p: 18px;
+    /* border raduis */
+    --br-button: 15px;
+}
+
