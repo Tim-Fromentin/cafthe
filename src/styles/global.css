@@ -2,14 +2,15 @@ html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body{margin:0;p
 
 :root {
     /* color */
-    --color-primary: #000;
-    --color-secondary: #000;
-    --color-bg: #000;
-    --color-text: #000;
+    --color-primary: #5D2C22;
+    --color-secondary: #E55934;
+    --color-third: #519872;
+    --color-bg: #FDFFFC;
+    --color-text: #1F2130;
     --color-accentuation: #000;
     /* font */
-    --font-title: ;
-    --font-text: ;
+    --font-title: "virust", serif;
+    --font-text: PlusJakartaSans, sans-serif;
     /* fz */
     --fz-h1: 64px;
     --fz-h2: 50px;
@@ -18,7 +19,23 @@ html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body{margin:0;p
     --fz-h5: 32px;
     --fz-h6: 24px;
     --fz-p: 18px;
-    /* border raduis */
-    --br-button: 15px;
+    /* border radius */
+    --br-button: 5px;
 }
 
+/* font */
+@font-face {
+    font-family: "viruts";
+    src: url("../../public/assets/fonts/VIRUST.ttf") format("truetype");
+}
+
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.title {
+    font-family: viruts;
+    font-size: var(--fz-h1);
+}

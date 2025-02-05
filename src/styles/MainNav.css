@@ -1,6 +1,7 @@
 #mainNav {
-    /*width: 100%;*/
+    width: 100%;
     padding: 10px 25px;
+    position: fixed;
 }
 .mn_links {
     width: 100%;
