@@ -142,6 +142,19 @@ router.get("/products_by_categorie/:id", (req, res) => {
 
     })
 })
+// delete client
+router.delete('/client_del/:id', (req, res) => {
+    const id = parseInt(req.params.id);
 
+    db.query('DELETE FROM clients WHERE client_id = ?', [id], (err, result) => {
+        if(err){
+            return res.status(500).json({message: 'erreur du serveur'})
+        }
+        if(result.length === 0){
+            return  res.status(404).json({message: 'client non trouver'})
+        }
+        res.json(result[0])
+    })
+})
 
 module.exports = router;
