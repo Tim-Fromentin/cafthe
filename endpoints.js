@@ -180,7 +180,7 @@ router.put('/client_modif/:id', (req,res) => {
 router.put('/client_modif_pass/:id', (req,res) => {
     const id = parseInt(req.params.id)
     const {client_password} = req.body
-    db.query('UPDATE clients SET client_firstName = ? WHERE client_id = ?',
+    db.query('UPDATE clients SET client_password = ? WHERE client_id = ?',
         [client_password, id], (err, result) => {
             if(err){
                 return res.status(500).json({message: 'erreur du serveur'})
