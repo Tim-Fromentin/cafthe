@@ -157,4 +157,26 @@ router.delete('/client_del/:id', (req, res) => {
     })
 })
 
+// modifier client
+
+router.put('/client_modif/:id', (req,res) => {
+    const id = parseInt(req.params.id)
+    const {client_firstName, client_lastName, client_email} = req.body
+    db.query('UPDATE clients SET client_firstName = ?, client_lastName = ?, client_email = ? WHERE client_id = ?',
+        [client_firstName, client_lastName, client_email, id], (err, result) => {
+            if(err){
+                return res.status(500).json({message: 'erreur du serveur'})
+            }
+            if(result.length === 0){
+                return  res.status(404).json({message: 'client non trouver'})
+            }
+            res.json(result[0])
+        })
+    res.status(200).json({message: "Modification reussi"})
+
+
+})
+
+// modifier mot de passe
+
 module.exports = router;
