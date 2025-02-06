@@ -174,11 +174,25 @@ router.put('/client_modif/:id', (req,res) => {
         })
     res.status(200).json({message: "Modification reussi"})
 
-
 })
 
 // modifier mot de passe
+router.put('/client_modif_pass/:id', (req,res) => {
+    const id = parseInt(req.params.id)
+    const {client_password} = req.body
+    db.query('UPDATE clients SET client_firstName = ? WHERE client_id = ?',
+        [client_password, id], (err, result) => {
+            if(err){
+                return res.status(500).json({message: 'erreur du serveur'})
+            }
+            if(result.length === 0){
+                return  res.status(404).json({message: 'client non trouver'})
+            }
+            res.json(result[0])
+        })
+    res.status(200).json({message: "Modification reussi"})
 
+})
 
 
 // delete client
@@ -231,6 +245,9 @@ router.get('/client_command/:id', (req, res) => {
         })
 
 })
+
+// details commands
+
 
 
 module.exports = router;
