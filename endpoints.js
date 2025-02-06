@@ -121,5 +121,27 @@ router.get("/client/:id", (req, res) => {
     })
 })
 
+// produit pas categirue
+router.get("/products_by_categorie/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    // ---- ou - facon d'extructurer + rapide et
+    // const {id} = req.params;
+
+
+    db.query("SELECT * FROM products WHERE product_categorie_id = ?", [id], (err, result) => {
+
+        if(err){
+            return res.status(500).json({message: "erreur du serveur"})
+            // console.log(id)
+        }
+        if(result.length === 0){
+            return res.status(404).json({message: "produit non trouver"})
+            // console.log(id)
+        }
+        res.json(result[0]) // retournera uniquement le 1er resultat
+
+    })
+})
+
 
 module.exports = router;
