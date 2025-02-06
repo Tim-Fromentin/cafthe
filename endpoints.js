@@ -99,4 +99,27 @@ router.post("/clients/register", (req,res) => {
     })
 })
 
+// fiche client
+router.get("/client/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    // ---- ou - facon d'extructurer + rapide et
+    // const {id} = req.params;
+
+
+    db.query("SELECT client_email, client_firstName, client_lastName FROM clients WHERE clients.client_id = ?", [id], (err, result) => {
+
+        if(err){
+            return res.status(500).json({message: "erreur du serveur"})
+            // console.log(id)
+        }
+        if(result.length === 0){
+            return res.status(404).json({message: "client non trouver"})
+            // console.log(id)
+        }
+        res.json(result[0]) // retournera uniquement le 1er resultat
+
+    })
+})
+
+
 module.exports = router;
