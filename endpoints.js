@@ -211,8 +211,24 @@ router.put('/client_del/:id', (req,res) => {
             }
             res.json(result[0])
         })
-    res.status(200).json({message: "Client supprimer"})
+    res.status(200).json({message: "Client supprime"})
 
+})
+
+// list commande client
+
+router.get('/client_command/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    db.query('SELECT command_lines.command_id, command_lines.product_serial_number, products.product_name, commands.client_id FROM command_lines INNER JOIN products ON products.product_serial_number = command_lines.product_serial_number INNER JOIN commands ON commands.command_id = command_lines.command_id WHERE commands.client_id = ? GROUP BY command_lines.command_id, command_lines.product_serial_number, products.product_name, commands.client_id;',
+        [id], (err, result) => {
+            if(err){
+                return res.status(500).json({message: 'erreur du serveur'})
+            }
+            if(result.length === 0){
+                return  res.status(404).json({message: 'client non trouver'})
+            }
+            res.json(result)
+        })
 
 })
 
