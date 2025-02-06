@@ -118,6 +118,21 @@ router.post('/products/add', (req, res) => {
         })
 })
 
+// delete product
+router.delete('/products/delete/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+
+    db.query('DELETE FROM products WHERE product_serial_number = ?', [id], (err, result) => {
+        if(err){
+            return res.status(500).json({message: 'erreur du serveur'})
+        }
+        if(result.length === 0){
+            return  res.status(404).json({message: 'client non trouver'})
+        }
+        res.json(result[0])
+    })
+})
+
 // fiche client
 router.get("/client/:id", (req, res) => {
     const id = parseInt(req.params.id);
