@@ -179,4 +179,42 @@ router.put('/client_modif/:id', (req,res) => {
 
 // modifier mot de passe
 
+
+
+// delete client
+// router.delete('/client_del/:id', (req, res) => {
+//     const id = parseInt(req.params.id);
+//
+//     db.query('DELETE FROM clients WHERE client_id = ?', [id], (err, result) => {
+//         if(err){
+//             return res.status(500).json({message: 'erreur du serveur'})
+//         }
+//         if(result.length === 0){
+//             return  res.status(404).json({message: 'client non trouver'})
+//         }
+//         res.json(result[0])
+//     })
+// })
+
+
+
+router.put('/client_del/:id', (req,res) => {
+    const id = parseInt(req.params.id)
+
+    db.query('UPDATE clients SET client_firstName = "CLIENT DELETE", client_lastName = "CLIENT DELETE", client_email = "CLIENT DELETE", client_password = "CLIENT DELETE" WHERE client_id = ?',
+        [id], (err, result) => {
+            if(err){
+                return res.status(500).json({message: 'erreur du serveur'})
+            }
+            if(result.length === 0){
+                return  res.status(404).json({message: 'client non trouver'})
+            }
+            res.json(result[0])
+        })
+    res.status(200).json({message: "Client supprimer"})
+
+
+})
+
+
 module.exports = router;
