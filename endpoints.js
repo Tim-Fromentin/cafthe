@@ -74,6 +74,7 @@ router.post("/clients/register", (req,res) => {
 
     })
 
+
 //     hachage password
     bcrypt.hash(client_password, 10, (err, hash) => {
         if (err) {
@@ -97,6 +98,24 @@ router.post("/clients/register", (req,res) => {
             res.status(201).json({message: "Inscrpition reussi", client_id: result.insertId})
             })
     })
+})
+
+// ajout de produit
+router.post('/products/add', (req, res) => {
+    const {product_name, product_desc, product_price, product_img, product_stock, product_weight, product_categorie_id} = req.body
+    db.query("INSERT INTO products(product_name, product_desc, product_price, product_img, product_stock, product_weight, product_categorie_id) VALUES (?,?,?,?,?,?,?)",
+        [product_name, product_desc, product_price, product_img, product_stock, product_weight, product_categorie_id],
+        (err, result) => {
+            if (err)
+
+            {
+                // console.error(err);
+                return res
+                    .status(500)
+                    .json({message: "erreur lors de l'inscription"})
+            }
+            res.status(201).json({message: "Produit ajouter", client_id: result.insertId})
+        })
 })
 
 // fiche client
