@@ -1,0 +1,20 @@
+@import "global.css";
+#homepage{
+    width: 100%;
+    margin-top: 73.2px;
+    height: 100vh;
+    padding: 50px;
+    background: var(--color-text);
+    color: var(--color-bg);
+    box-sizing: border-box !important;
+    position: relative;
+}
+
+.hp_list_label {
+    width: 100%;
+    height: 40%;
+    background: var(--color-bg);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

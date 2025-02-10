@@ -6,11 +6,13 @@ import './styles/global.css'
 import reportWebVitals from './reportWebVitals';
 import './MainNav'
 import MainNav from "./MainNav";
+import HomePage from './HomePage'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <MainNav />
+      <HomePage />
   </React.StrictMode>
 );
 
