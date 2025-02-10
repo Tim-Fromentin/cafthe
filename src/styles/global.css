@@ -1,5 +1,8 @@
 html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body{margin:0;padding:0}ol,ul{list-style:none}a{text-decoration:none;color:inherit}
-
+*, html, div {
+    box-sizing: border-box !important;
+}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 :root {
     /* color */
     --color-primary: #5D2C22;
@@ -33,9 +36,21 @@ html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body{margin:0;p
 body {
     background: var(--color-bg);
     color: var(--color-text);
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+section {
+    padding: 50px;
+    min-height: 100vh;
 }
 
 .title {
     font-family: viruts;
     font-size: var(--fz-h2);
+}
+.surtitle--b {
+    font-size: var(--fz-h3);
+    color: var(--color-primary);
+}.surtitle--w {
+    font-size: var(--fz-h3);
+     color: var(--color-bg);
 }
