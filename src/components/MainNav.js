@@ -1,6 +1,6 @@
 import React from 'react';
-import ('./styles/global.css')
-import ('./styles/MainNav.css')
+import ('../styles/global.css')
+import ('../styles/MainNav.css')
 
 const MainNav = () => {
     return (
