@@ -1,0 +1,54 @@
+@import "global.css";
+#s_contact {
+    position: relative;
+    height: 120vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-bg);
+}
+#s_contact img {
+    max-height: 400px;
+}
+
+.sc_box_contact {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 44px 25px;
+    height: auto;
+    width: auto;
+    background: var(--color-bg);
+    color: var(--color-text);
+    border-radius: 5px;
+}
+.phone--icon {
+    background: var(--color-text);
+    height: 40px;
+    width: 40px;
+    /*padding: 12px;*/
+    border-radius: 10px;
+    position: relative;
+    margin-right: 15px;
+}
+.phone--icon img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 28px;
+    object-fit: cover;
+}
+.phone_num {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    margin-bottom: 60px;
+}
+.phone_num h4 {
+    margin-bottom: 20px;
+}
+.list_contact .list_item {
+    margin-top: 50px;
+}

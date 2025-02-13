@@ -3,6 +3,7 @@ import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import "react-loading-skeleton/dist/skeleton.css"
 import Skeleton from "react-loading-skeleton";
+import '../styles/productList.css'
 
 function ProductList(props) {
     const [products, setProducts] = useState([])
@@ -24,6 +25,18 @@ function ProductList(props) {
         void fetchProducts();
     }, []);
 
+
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheck = (event) => {
+        const checked = event.target.checked;
+        setIsChecked(checked);
+        if (checked){
+            console.log('f')
+        }
+        // console.log("Checkbox checked:", event.target.checked);
+        console.log(isChecked)
+    };
     // if (isLoading){
     //     return (
     //         <div>
@@ -40,13 +53,52 @@ function ProductList(props) {
     //     )
     // }
     return (
-        <div>
-            <h1>Product List</h1>
-            <div>
-                {products.map((product) => <ProductCard key={product.product_serial_number} product={product}/>)}
+        <section id={'s_product--list'}>
+            <div className={'filter--opt'}>
+                <button>Filtrer</button>
+                <div>
+                <span>Filtrer par</span>
+                    <select>
+                        <option value={'price_asc'}>Prix croissant</option>
+                        <option value={'price_dsc'}>Prix decroissant</option>
+                        <option value={'new'}>Nouveaute</option>
+                    </select>
+                </div>
+                <span>{products.length} Produits trouver</span>
 
             </div>
-        </div>
+
+            <div className={'product--list'}>
+                <nav className={'product_filter--list'}>
+                    <ul>
+                        <li className={'filter--item'}>
+                            <h6>Choix du pays de production</h6>
+                        </li>
+                        {[...new Set(products.map((product) => product.product_country))].map((country) => (
+                            // <div key={country}>{country}</div>
+
+
+                            <li className={'filter--item'}>
+                        <input
+                            type="checkbox"
+                            id={country}
+                            key={country}
+                           checked={isChecked}
+                           onChange={handleCheck}
+                        />
+                        <label htmlFor={country}>{country}</label>
+                    </li>
+                    ))}
+
+                    </ul>
+                </nav>
+                <div className={'products'}>
+
+                    {products.map((product) => <ProductCard key={product.product_serial_number} product={product}/>)}
+                </div>
+
+            </div>
+        </section>
     );
 }
 

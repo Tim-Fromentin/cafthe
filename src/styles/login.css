@@ -1,0 +1,49 @@
+@import "global.css";
+#s_login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+#s_login form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+#s_login form label {
+    margin: 25px 0 10px 0;
+}
+#s_login form input {
+    padding: 5px 25px 5px 5px;
+    border: none;
+    border-bottom: 1px solid var(--color-text);
+    margin-bottom: 25px;
+}
+.log--banner {
+    width: 100%;
+    height: 100vh;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: 5px;
+    padding: 50px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.log--banner img {
+    max-height: 300px;
+}
+
+.form--title {
+    font-family: viruts;
+    font-size: var(--fz-h1);
+}
+.log--btn {
+    cursor: pointer;
+    padding: 10px 25px;
+    background: var(--color-bg);
+    border: none;
+    box-shadow: 0px 0px 20px var(--color-text);
+
+}

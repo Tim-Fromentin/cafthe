@@ -1,23 +1,29 @@
 #mainNav {
     width: 100%;
-    padding: 10px 25px;
+    padding: 25px 25px;
     background: var(--color-bg);
+    display: flex;
 }
 .mn_links {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
-.mn_links a {
+.mn_link {
+
+    margin: 0 50px;
+}
+.mn_link, .mn_button--log span {
     position: relative;
     z-index: 20;
     padding: 5px 10px;
     transition: color .1s .1s ease-in-out;
 }
-.mn_links a:hover {
+.mn_link:hover, .mn_button--log span:hover {
     color: var(--color-bg);
 }
-.mn_links a::before {
+
+.mn_link::before, .mn_button--log span::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -28,6 +34,29 @@
     z-index: -1;
     transition: height .2s ease-in-out;
 }
-.mn_links a:hover::before {
+.mn_link:hover::before, .mn_button--log span:hover::before {
     height: 100%;
+}
+.mn_link--active::before, .mn_button--log--active span::before {
+    height: 100%;
+}
+.mn_link--active, .mn_button--log--active {
+    color: var(--color-bg);
+    
+}
+
+.mn_buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+}
+.mn_button img {
+    height: 35px;
+}
+
+.mn_button--log {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
