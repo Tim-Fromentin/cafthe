@@ -1,6 +1,8 @@
 const express = require('express')
 
 const db = require('./db')
+require("dotenv")
+const {verifyToken} = require('./middleware')
 
 const bcrypt = require('bcrypt')
 const {hash} = require("bcrypt");
@@ -8,6 +10,9 @@ const url = require("node:url");
 
 const router = express.Router()
 
+const jwt = require('jsonwebtoken')
+const {sign} = require('jsonwebtoken')
+const {json} = require("express");
 
 
 
@@ -15,16 +20,45 @@ const router = express.Router()
 // route: lister les produits
 // GET /api/produits
 router.get("/products", (req, res) => {
-    db.query("SELECT * FROM products", (err, result) => {
-        if(err){
-            return res.status(500).json({message: "erreur du serveur"})
+    console.log("Requête reçue avec req.query :", req.query);
+    const { filter } = req.query;
+    let sqlQuery = "SELECT * FROM products";
+
+    if (filter === "desc") {
+        sqlQuery += " ORDER BY product_price DESC";
+    } else if (filter === "asc") {
+        sqlQuery += " ORDER BY product_price ASC";
+    }
+
+    console.log("Requête SQL exécutée :", sqlQuery);
+    db.query(sqlQuery, (err, result) => {
+        if (err) {
+            console.error("Erreur SQL :", err);
+            return res.status(500).json({ message: "Erreur du serveur" });
         }
-        res.json(result)
-    })
-})
+        res.json(result);
+    });
+});
 
 
-router.get("/products/:id", (req, res) => {
+// Produit par prix decroissant
+
+// router.get("/products?filter=desc", (req, res) => {
+//     db.query("SELECT * FROM products ORDER BY product_price DESC", (err, result) => {
+//         console.log(req.client)
+//         if(err){
+//             return res.status(500).json({message: "erreur du serveur"})
+//         }
+//         res.json(result)
+//     })
+// })
+
+
+
+
+
+
+router.get("/product/:id", (req, res) => {
     const id = parseInt(req.params.id);
     // ---- ou - facon d'extructurer + rapide et
     // const {id} = req.params;
@@ -44,6 +78,19 @@ router.get("/products/:id", (req, res) => {
 
     })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // route inscription d'un client
@@ -75,6 +122,10 @@ router.post("/clients/register", (req,res) => {
     })
 
 
+
+
+
+
 //     hachage password
     bcrypt.hash(client_password, 10, (err, hash) => {
         if (err) {
@@ -99,6 +150,39 @@ router.post("/clients/register", (req,res) => {
             })
     })
 })
+
+
+// login
+router.post("/clients/login", (req, res) => {
+    const {client_email, client_password} = req.body;
+    db.query('SELECT * FROM clients WHERE client_email = ?', [client_email], (err, result) => {
+
+        if(err) return res.status(500).json({message: "erreur du serveur 1"});
+        console.log(result)
+        if(result.length === 0) return res.status(401).json({message: 'Identifiant incorrect 1'});
+
+    const client = result[0]
+
+    //     verif passowrd
+        bcrypt.compare(client_password, client.client_password, (err, isMatch) => {
+            if(err) return res.status(500).json({message: "erreur du serveur 2"})
+            if(!isMatch) return  res.status(401).json({message: 'identifiant incorrect 2'})
+        //     generation d'un toke
+            const token = sign(
+                {id : client.client_id, email: client.client_email},
+                process.env.JWT_SECRET,
+                {expiresIn: process.env.JWT_EXPIRES_IN}
+            )
+
+        res.json({
+            message: 'Connexion reussi',
+            token,
+            client: {id: client.client_id, nom: client.client_lastName, prenom: client.client_firstName, email: client.client_email}
+        })
+        })
+    })
+})
+
 
 // ajout de produit
 router.post('/products/add', (req, res) => {
@@ -191,24 +275,7 @@ router.delete('/client_del/:id', (req, res) => {
     })
 })
 
-// modifier client
 
-router.put('/client_modif/:id', (req,res) => {
-    const id = parseInt(req.params.id)
-    const {client_firstName, client_lastName, client_email} = req.body
-    db.query('UPDATE clients SET client_firstName = ?, client_lastName = ?, client_email = ? WHERE client_id = ?',
-        [client_firstName, client_lastName, client_email, id], (err, result) => {
-            if(err){
-                return res.status(500).json({message: 'erreur du serveur'})
-            }
-            if(result.length === 0){
-                return  res.status(404).json({message: 'client non trouver'})
-            }
-            res.json(result[0])
-        })
-    res.status(200).json({message: "Modification reussi"})
-
-})
 
 // modifier mot de passe
 router.put('/client_modif_pass/:id', (req,res) => {
@@ -280,8 +347,262 @@ router.get('/client_command/:id', (req, res) => {
 
 })
 
-// details commands
+// add panier
 
 
+
+// router.post("/products/addCart", (req,res) => {
+//     const {command_id, command_statut, client_id, seller_id} = req.body
+//
+//     // verifier si le client a deja une commande en cours
+//     db.query("SELECT * FROM commands WHERE client_id = ? AND command_statut = 1", [client_id, command_statut], (err, result) => {
+//         // erreur du serveur
+//         if (err) {
+//             return res.status(500).json({message: "erreur du serveur"})
+//             // console.log(id)
+//         }
+//
+//         // si pas de commande en cours creer une nouvelle commande
+//         if (result.length === 0) {
+//             return res.status(400).json({message: "no command"})
+//             db.query('INSERT INTO commands (command_statut, client_id) VALUES (0, ?)')
+//             // console.log(id)
+//         }
+//
+//
+//     })
+//     // sinon si le produit choisi n'a jamais jamais etais selectionner
+//
+//     db.query("SELECT * FROM command_lines JOIN commands ON command_lines.command_id = commands.command_id WHERE commands.client_id = ? AND command_quantity > 0",
+//         [client_id], (err, result) => {
+//
+//             if (err) {
+//                 return res.status(500).json({message: "erreur du serveur"})
+//                 // console.log(id)
+//             }
+//
+//             if (result.length > 0) {
+//                 return res.status(400).json({message: "product exist"})
+//                 db.query('INSERT INTO command_lines (command_quantity, command_id, product_serial_number) VALUES (+1, ?,?)')
+//                 // console.log(id)
+//             }
+//
+//
+//
+//             db.query("INSERT INTO command_lines (command_quantity, command_id, product_serial_number) VALUES (1, ?,?)",
+//                 [command_quantity, command_id, product_serial_number],
+//                 (err, result) => {
+//                     if (err) {
+//                         // console.error(err);
+//                         return res
+//                             .status(500)
+//                             .json({message: "erreur lors de l'inscription"})
+//                     }
+//
+//                     res.status(201).json({message: "Inscrpition reussi", client_id: result.insertId})
+//                 })
+//         })
+
+
+
+
+
+
+
+
+
+
+router.post("/products/addCart", (req, res) => {
+    const { product_serial_number, client_id } = req.body;
+
+    // Vérifier si une commande existe pour le client avec statut "en cours"
+    db.query(
+        "SELECT * FROM commands WHERE client_id = ? AND command_statut = 1",
+        [client_id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Erreur du serveur" });
+            }
+
+            // Si aucune commande en cours n'existe, créer une nouvelle commande
+            if (result.length === 0) {
+                db.query(
+                    'INSERT INTO commands (command_statut, client_id, seller_id) VALUES (1, ?, 1)',
+                    [client_id],
+                    (err, result) => {
+                        if (err) {
+                            return res.status(500).json({ message: "Erreur lors de la création de la commande" });
+                        }
+                        const command_id = result.insertId;
+
+                        // Ajouter une ligne dans la commande avec une quantité de 1
+                        db.query(
+                            "INSERT INTO command_lines (command_quantity, command_id, product_serial_number) VALUES (?, ?, ?)",
+                            [1, command_id, product_serial_number],
+                            (err, result) => {
+                                if (err) {
+                                    return res.status(500).json({ message: "Erreur lors de l'ajout au panier" });
+                                }
+
+                                res.status(201).json({ message: "Produit ajouté au panier", command_line_id: result.insertId });
+                            }
+                        );
+                    }
+                );
+            } else {
+                const command_id = result[0].command_id;  // Récupérer l'ID de la commande existante
+
+                // Vérifier si le produit existe déjà dans la commande
+                db.query(
+                    "SELECT * FROM command_lines WHERE command_id = ? AND product_serial_number = ?",
+                    [command_id, product_serial_number],
+                    (err, result) => {
+                        if (err) {
+                            return res.status(500).json({ message: "Erreur du serveur" });
+                        }
+
+                        if (result.length > 0) {
+                            // Si le produit existe déjà, ajouter +1 à la quantité actuelle
+                            const new_quantity = result[0].command_quantity + 1;  // Ajoute 1 à la quantité existante
+                            db.query(
+                                "UPDATE command_lines SET command_quantity = ? WHERE command_line_id = ?",
+                                [new_quantity, result[0].command_line_id],
+                                (err, result) => {
+                                    if (err) {
+                                        return res.status(500).json({ message: "Erreur lors de la mise à jour du panier" });
+                                    }
+
+                                    res.status(200).json({ message: "Quantité mise à jour" });
+                                }
+                            );
+                        } else {
+                            // Si le produit n'existe pas, l'ajouter avec une quantité de 1
+                            db.query(
+                                "INSERT INTO command_lines (command_quantity, command_id, product_serial_number) VALUES (?, ?, ?)",
+                                [1, command_id, product_serial_number],
+                                (err, result) => {
+                                    if (err) {
+                                        return res.status(500).json({ message: "Erreur lors de l'ajout au panier" });
+                                    }
+
+                                    res.status(201).json({ message: "Produit ajouté au panier" });
+                                }
+                            );
+                        }
+                    }
+                );
+            }
+        }
+    );
+});
+
+// - 1 panier
+router.post("/client/cart/updateQuantityMore", (req, res) => {
+    const { client_id, product_serial_number } = req.body;
+
+    if (!client_id || !product_serial_number) {
+        return res.status(400).json({ message: "Client ID ou Serial Number du produit manquant" });
+    }
+
+    // Requête SQL avec jointure et utilisation des variables
+    db.query(
+        `UPDATE command_lines
+        JOIN commands ON commands.command_id = command_lines.command_id
+        JOIN clients ON clients.client_id = commands.client_id
+        SET command_quantity = command_quantity + 1
+        WHERE clients.client_id = ? 
+        AND commands.command_statut = 1 
+        AND command_lines.product_serial_number = ?`,
+        [client_id, product_serial_number],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Erreur du serveur" });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Aucune ligne de commande trouvée ou aucune mise à jour effectuée" });
+            }
+
+            res.status(200).json({ message: "Quantité modifiée" });
+        }
+    );
+});
+
+
+
+// detail commande
+router.post("/client/cart", (req, res) => {
+    const { client_id } = req.body;
+
+    if (!client_id) {
+        return res.status(400).json({ message: "Client ID manquant" });
+    }
+
+    db.query(
+        "SELECT command_lines.*, clients.client_id, products.* " +
+        "FROM command_lines " +
+        "JOIN commands ON commands.command_id = command_lines.command_id " +
+        "JOIN clients ON clients.client_id = commands.client_id " +
+        "JOIN products ON products.product_serial_number = command_lines.product_serial_number " +
+        "WHERE commands.command_statut = 1 AND clients.client_id = ?;",
+        [client_id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Erreur du serveur" });
+            }
+            res.json(result);
+        }
+    );
+});
+
+
+// del ligne panier
+router.delete('/client/cart/deleteLine', (req, res) => {
+    const { client_id,command_line_id } = req.body;
+
+
+    db.query('DELETE command_lines FROM command_lines JOIN commands ON commands.command_id = command_lines.command_id JOIN clients ON clients.client_id = commands.client_id WHERE command_lines.command_line_id = ? AND clients.client_id = ? AND commands.command_statut = 1;', [command_line_id], (err, result) => {
+        if(err){
+            return res.status(500).json({message: 'erreur du serveur'})
+        }
+        if(result.length === 0){
+            return  res.status(404).json({message: 'produit non trouver'})
+        }
+        res.json(result[0])
+    })
+})
+
+
+
+// modifier client
+
+router.put('/client_modif/', (req, res) => {
+    const { Newemail, client_id } = req.body;
+
+    console.log("Données reçues : ", { Newemail, client_id });  // Ajoute un log pour voir ce qui est reçu par le serveur
+
+    db.query('UPDATE clients SET client_email = ? WHERE client_id = ?',
+        [Newemail, client_id], (err, result) => {
+            if (err) {
+                console.error("Erreur de base de données :", err); // Ajoute un log pour afficher l'erreur de la base de données
+                return res.status(500).json({ message: 'Erreur du serveur' });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: 'Client non trouvé' });
+            }
+
+            console.log("Résultat de la requête :", result);  // Ajoute un log pour voir le résultat de la requête
+            res.json({ message: "Modification réussie" });
+        }
+    );
+});
+
+
+
+router.get('/test', (req, res) => {
+    console.log(req.headers);
+    res.json(req.headers);
+});
 
 module.exports = router;

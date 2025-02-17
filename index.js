@@ -16,7 +16,6 @@ app.use('/api', routes)
 
 // demarrer le serveur
 const PORT = process.env.PORT  || 3000
-
 app.listen(PORT, () => {
     console.log(`L'api est demarrer sur http://localhost:${PORT}`)
 })
