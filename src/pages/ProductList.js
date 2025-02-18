@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {use, useEffect, useState} from 'react';
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import "react-loading-skeleton/dist/skeleton.css"
@@ -8,22 +8,27 @@ import '../styles/productList.css'
 function ProductList(props) {
     const [products, setProducts] = useState([])
     // const [isLoading, setIsLoading] = useState(true)
+    const [filter, setFilter] = useState('');
+
+    const handleChange = (event) => {
+        const valueOpt = event.target.value;
+        setFilter(valueOpt);
+        console.log(valueOpt)
+    };
 
     useEffect(() => {
         const fetchProducts = async () => {
+            if (!filter) setFilter('asc');
             try {
-                const response = await axios.get("http://localhost:3000/api/products");
-                console.log(response.data)
+                const response = await axios.get(`http://localhost:3000/api/products?filter=${filter}`);
                 setProducts(response.data);
             } catch (error){
                 console.error("Erreur de chargement des produits")
             }
-            // finally {
-            //     setIsLoading(false)
-            // }
+
         }
         void fetchProducts();
-    }, []);
+    }, [filter]);
 
 
     const [isChecked, setIsChecked] = useState(false);
@@ -37,6 +42,8 @@ function ProductList(props) {
         // console.log("Checkbox checked:", event.target.checked);
         console.log(isChecked)
     };
+
+
     // if (isLoading){
     //     return (
     //         <div>
@@ -52,16 +59,19 @@ function ProductList(props) {
     //         </div>
     //     )
     // }
+
+
+
+
+
     return (
         <section id={'s_product--list'}>
             <div className={'filter--opt'}>
-                <button>Filtrer</button>
                 <div>
                 <span>Filtrer par</span>
-                    <select>
-                        <option value={'price_asc'}>Prix croissant</option>
-                        <option value={'price_dsc'}>Prix decroissant</option>
-                        <option value={'new'}>Nouveaute</option>
+                    <select className={'filter--select'} onChange={handleChange}>
+                        <option value={'asc'}>Prix croissant</option>
+                        <option value={'desc'}>Prix decroissant</option>
                     </select>
                 </div>
                 <span>{products.length} Produits trouver</span>
@@ -69,29 +79,33 @@ function ProductList(props) {
             </div>
 
             <div className={'product--list'}>
-                <nav className={'product_filter--list'}>
-                    <ul>
-                        <li className={'filter--item'}>
-                            <h6>Choix du pays de production</h6>
-                        </li>
-                        {[...new Set(products.map((product) => product.product_country))].map((country) => (
-                            // <div key={country}>{country}</div>
+                {/*<nav className={'product_filter--list'}>*/}
+                {/*    <ul>*/}
+                {/*        <li className={'filter--item'}>*/}
+                {/*            <h6>Choix du pays de production</h6>*/}
+                {/*        </li>*/}
+                {/*        {[...new Set(products.map((product) => product.product_country))].map((country) => (*/}
+                {/*            // <div key={country}>{country}</div>*/}
 
 
-                            <li className={'filter--item'}>
-                        <input
-                            type="checkbox"
-                            id={country}
-                            key={country}
-                           checked={isChecked}
-                           onChange={handleCheck}
-                        />
-                        <label htmlFor={country}>{country}</label>
-                    </li>
-                    ))}
+                {/*            <li className={'filter--item'}>*/}
+                {/*                <input*/}
+                {/*                    type="radio"*/}
+                {/*                    id={country}*/}
+                {/*                    key={country}*/}
+                {/*                    checked={isChecked}*/}
+                {/*                    onChange={handleCheck}*/}
+                {/*                />*/}
+                {/*                <label htmlFor={country}>{country}</label>*/}
+                {/*            </li>*/}
+                {/*        ))}*/}
+                {/*        /!*<li className={'filter--item'}>*!/*/}
+                {/*        /!*    <input key={'price_min'} type={"number"}/>*!/*/}
+                {/*        /!*    <input key={'price_max'} type={"number"}/>*!/*/}
+                {/*        /!*</li>*!/*/}
 
-                    </ul>
-                </nav>
+                {/*    </ul>*/}
+                {/*</nav>*/}
                 <div className={'products'}>
 
                     {products.map((product) => <ProductCard key={product.product_serial_number} product={product}/>)}

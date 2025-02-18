@@ -1,16 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ProductList from "./ProductList";
+import axios from "axios";
+import ProductCard from "../components/ProductCard";
 
 import ('../styles/global.css')
 import ('../styles/HomePage.css')
 
 const HomePage = () => {
 
-    function handleCategorie(e){
-        const key = e.target.dataset.key
-        console.log(key)
 
-    }
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/best_product/`);
+                setProducts(response.data);
+            } catch (error){
+                console.error("Erreur de chargement des produits")
+            }
+
+        }
+        void fetchProducts();
+    }, [products]);
     return (
 
     <main>
@@ -18,7 +29,7 @@ const HomePage = () => {
         <section id={'homepage'}>
     <div className={"hp_box_txt"}>
         <h1 className={'title'}>
-            Caf'the le meilleur du cafe
+            Cacaf'the le meilleur du cafe
         </h1>
         <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit.</p>
     </div>
@@ -38,14 +49,10 @@ const HomePage = () => {
         </section>
 
         <section id={"s_h_product_list"}>
-            <h2>Nos produits phares</h2>
+            <h2 className={'surtitle--b'}>Nos produits phares</h2>
             <p className={"text"}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et </p>
             <div className={"container_product_list"}>
-                <div className={"tab"}>
-                    <button className={"tab--item"}>Nouveaux</button>
-                    <button className={"tab--item"} onClick={handleCategorie} data-key={1}>Nouveaux</button>
-                    <button className={"tab--item"} onClick={handleCategorie} data-key={2}>Nouveaux</button>
-                </div>
+                    {products.map((product) => <ProductCard key={product.product_serial_number} product={product}/>)}
             </div>
         </section>
 

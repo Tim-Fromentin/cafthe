@@ -1,15 +1,15 @@
 import React, {useContext, useState} from 'react';
-import '../styles/login.css'
-import  '../styles/global.css'
-import axios from "axios";
 import {AuthContext} from "../context/AuthContext";
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
-function Login(props) {
+function Register(props) {
     const {login} = useContext(AuthContext) // function login venant du contexte
     const navigate = useNavigate()
     const [client_email, setClient_email] = useState('')
     const [client_password, setClient_password] = useState('')
+    const [client_firstName, setClient_firstName] = useState('')
+    const [client_lastName, setClient_lastName] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
     const handleSubmit= async (e) => {
@@ -17,17 +17,19 @@ function Login(props) {
         setErrorMsg('')
 
         try {
-            const response = await axios.post("http://localhost:3000/api/clients/login", {
+            const response = await axios.post("http://localhost:3000/api/clients/register", {
+                client_firstName,
+                client_lastName,
                 client_email,
                 client_password
             })
             const { token, client } = response.data
 
-        //     on met a jour le contexte d'authendification
+            //     on met a jour le contexte d'authendification
             login(token, client)
 
-        //     Redirection d'un client vers une page
-            navigate("/")
+            //     Redirection d'un client vers une page
+            navigate("/Login")
         } catch (error) {
             console.error('Erreur lors de la connexion : ', error);
             if (error.response.data.message){
@@ -42,19 +44,41 @@ function Login(props) {
             <section id={'s_login'}>
 
                 <form onSubmit={handleSubmit}>
-                    <h1>Se connecter</h1>
+                    <h1>Se creer un compte</h1>
+
+                    <label htmlFor={'client_firstName'}>Votre prenom</label>
+                    <input
+                        type={'text'}
+                        id={'client_firstName'}
+                        value={client_firstName}
+                        onChange={(e) => {
+                            setClient_firstName(e.target.value)
+                        }}/>
+
+                    <label htmlFor={'client_lastName'}>Votre nom</label>
+                    <input
+                        type={'text'}
+                        id={'client_lastName'}
+                        value={client_lastName}
+                        onChange={(e) => {
+                            setClient_lastName(e.target.value)
+                        }}/>
+
+
                     <label htmlFor={'email'}>Votre email</label>
                     <input
                         type={'email'}
                         id={'email'}
                         value={client_email}
-                        onChange={ (e) => { setClient_email(e.target.value) } } />
+                        onChange={(e) => {
+                            setClient_email(e.target.value)
+                        }}/>
 
                     <label htmlFor={'password'}>Mot de passe</label>
                     <input type={'password'} id={'password'} value={client_password}
-                    onChange={(e) => {
-                        setClient_password(e.target.value)
-                    }}
+                           onChange={(e) => {
+                               setClient_password(e.target.value)
+                           }}
                     />
 
                     {errorMsg && (
@@ -64,9 +88,6 @@ function Login(props) {
                     <button type={'submit'} className={'link--primary'}>
                         Se connecter
                     </button>
-                    <NavLink to={'/register'}>
-                        Pas encore de compte ?
-                    </NavLink>
                 </form>
 
                 <div className={'log--banner'}>
@@ -79,4 +100,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default Register;

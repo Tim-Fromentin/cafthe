@@ -71,3 +71,16 @@
      padding: 15px;
      margin: 0 5px;
  }
+.container_product_list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+#s_h_product_list {
+    padding: 50px;
+    text-align: center;
+}
+.hp_box_txt {
+    padding: 50px;
+}

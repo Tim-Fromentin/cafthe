@@ -12,6 +12,11 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import {AuthProvider} from "./context/AuthContext";
 import Profil from "./pages/Profil";
+import Cart from "./pages/Cart";
+import Register from "./pages/Register";
+import Modif from "./pages/Modif";
+import ModifPass from "./pages/ModifPass";
+import Command from "./pages/Command";
 
 
 function App() {
@@ -23,7 +28,12 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
           </Route>
-            <Route path={"product/:id"} element={<ProductDetails />} />
+            <Route path="product/:id" element={<Layout />}>
+                <Route index element={<ProductDetails />} />
+            </Route>
+            <Route path="command" element={<Layout />}>
+                <Route index element={<Command />} />
+            </Route>
             <Route path="/contact/" element={<Layout />}>
                 <Route index element={<Contact />} />
             </Route>
@@ -33,8 +43,20 @@ function App() {
             <Route path="/login" element={<Layout />}>
                 <Route index element={<Login />} />
             </Route>
+            <Route path="/register" element={<Layout />}>
+                <Route index element={<Register />} />
+            </Route>
             <Route path="/profil" element={<Layout />}>
                 <Route index element={<Profil />} />
+            </Route>
+            <Route path="/profil/modif" element={<Layout />}>
+                <Route index element={<Modif />} />
+            </Route>
+            <Route path="/profil/modifPass" element={<Layout />}>
+                <Route index element={<ModifPass />} />
+            </Route>
+            <Route path="/panier" element={<Layout />}>
+                <Route index element={<Cart />} />
             </Route>
           {/*Si la route n'est pas trouver renvoie vers le components notfound sois 404*/}
           <Route path="*" element={<NotFound />} />

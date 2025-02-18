@@ -1,0 +1,8 @@
+@import "global.css";
+
+#s_profil {
+    padding: 50px;
+}
+#s_profil a {
+    padding: 100px 0;
+}

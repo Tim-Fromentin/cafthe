@@ -1,5 +1,6 @@
 @import "global.css";
 #s_contact {
+    padding: 50px;
     position: relative;
     height: 120vh;
     display: flex;

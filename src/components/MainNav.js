@@ -10,8 +10,11 @@ const MainNav = () => {
     const handleLogout = () => {
         logout();
     }
+    function cartCounter() {
+        console.log('f')
+    }
     return (
-        <nav id={'mainNav'}>
+        <nav id={'mainNav'} onLoad={cartCounter}>
             <ul className={'mn_links'}>
                 <li className={''}>
                     <a href={'#'}>
@@ -48,9 +51,12 @@ const MainNav = () => {
                 </NavLink>
             </ul>
             <ul className={'mn_buttons'}>
-                <li className={'mn_button'}><a href={'#'}>
+                <li className={'mn_button'}>
+                    <NavLink to="/panier" className={(footer) => (footer.isActive ? "mn_button" : "mn_button")}>
                     <img src={'./assets/images/cart--icon.png'} />
-                </a></li>
+
+                    </NavLink>
+                </li>
                 <NavLink to="/Login" className={(footer) => (footer.isActive ? "mn_button" : "mn_button")}>
 
                     {/*<img src={'./assets/images/user--icon.png'} />*/}

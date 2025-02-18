@@ -1,0 +1,31 @@
+@import "global.css";
+
+#s_product {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    padding: 50px;
+}
+.box--img {
+    max-width: 800px;
+    height: 500px;
+    background: rgba(31, 33, 48, 0.5);
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.box--img img {
+    max-width: 100%;
+    object-fit: cover;
+}
+.box--content {
+    width: 50%;
+    height: 500px;
+}
+.box--content h1 {
+    margin: 50px 0;
+}
