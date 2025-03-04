@@ -73,6 +73,8 @@
  }
 .container_product_list {
     display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
     align-items: center;
     justify-content: space-around;
     margin-top: 50px;
@@ -83,4 +85,51 @@
 }
 .hp_box_txt {
     padding: 50px;
+}
+
+#s_merit {
+    padding: 50px;
+    text-align: center;
+}
+
+.box--merit {
+    margin-top: 50px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.box--merit img {
+    width: 60px;
+}
+.box--merit_img {
+    padding: 5px;
+    border: 1px solid #333;
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+}
+.box--merit h4 {
+    margin: 15px 0;
+}
+.list--merit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 105px;
+    flex-wrap:wrap;
+}
+
+@media (max-width: 768px) {
+    .hp_img {
+        display: none;
+    }
+}
+@media (max-width: 426px) {
+    #s_history .test video {
+        display: none;
+    }
+    #s_history {
+        grid-template-columns: 1fr;
+    }
 }

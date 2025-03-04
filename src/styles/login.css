@@ -1,5 +1,5 @@
 @import "global.css";
-#s_login {
+#s_login, #s_register {
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
@@ -10,13 +10,16 @@
     flex-direction: column;
     align-items: start;
 }
-#s_login form label {
+#s_login form label, #s_register form label {
     margin: 25px 0 10px 0;
 }
-#s_login form input {
+#s_login form input, #s_register form input {
     padding: 5px 25px 5px 5px;
     border: none;
     border-bottom: 1px solid var(--color-text);
+    margin-bottom: 5px;
+}
+#s_login form input:last-of-type {
     margin-bottom: 25px;
 }
 .log--banner {
@@ -32,6 +35,16 @@
     justify-content: center;
     text-align: center;
 }
+@media (max-width: 765px) {
+    .log--banner {
+        display: none;
+    }
+    #s_login, #s_register {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
 .log--banner img {
     max-height: 300px;
 }
@@ -40,11 +53,16 @@
     font-family: viruts;
     font-size: var(--fz-h1);
 }
-.log--btn {
-    cursor: pointer;
-    padding: 10px 25px;
-    background: var(--color-bg);
-    border: none;
-    box-shadow: 0px 0px 20px var(--color-text);
 
+#s_register .log--btn {
+    grid-column: span 2;
+    margin-top: 50px;
+    text-align: center;
+}
+
+
+.form--container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 25px 0;
 }

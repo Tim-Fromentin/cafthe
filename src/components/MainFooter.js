@@ -38,6 +38,16 @@ const MainFooter = () => {
                         Contact
                     </NavLink>
                 </li>
+                <li className={'r_5'}>
+                    <NavLink to="/Conditions-generales-d'utilisation">
+                        Conditions Générales d'Utilisation
+                    </NavLink>
+                </li>
+                <li className={'r_5'}>
+                    <NavLink to="/Conditions-generales-de-vente">
+                        Conditions Générales d'Utilisation
+                    </NavLink>
+                </li>
 
             </ul>
             <ul className={'c_3'}>

@@ -1,17 +1,19 @@
 @import "global.css";
 
 #s_product {
-    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 50px;
-    padding: 50px;
+    padding: var(--pd-section);
+}
+@media (max-width: 424px) {
+    #s_product {
+        flex-direction: column;
+    }
 }
 .box--img {
     max-width: 800px;
     height: 500px;
-    background: rgba(31, 33, 48, 0.5);
     width: 40%;
     display: flex;
     justify-content: center;
@@ -22,10 +24,30 @@
     max-width: 100%;
     object-fit: cover;
 }
+
 .box--content {
-    width: 50%;
-    height: 500px;
+    width: 60%;
 }
-.box--content h1 {
-    margin: 50px 0;
+.cart--btn {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border: none;
+    background: var(--color-text);
+    color: var(--color-bg);
+    padding: 15px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.cart--btn img {
+    height: 16px;
+}
+.pd_price {
+    font-weight: 900;
+}
+.pd_name {
+    font-weight: 300;
+}
+#s_product hr {
+
 }

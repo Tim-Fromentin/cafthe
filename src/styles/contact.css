@@ -40,6 +40,7 @@
     transform: translate(-50%, -50%);
     height: 28px;
     object-fit: cover;
+    max-width: 100%;
 }
 .phone_num {
     display: flex;

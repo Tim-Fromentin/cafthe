@@ -29,7 +29,7 @@ const HomePage = () => {
         <section id={'homepage'}>
     <div className={"hp_box_txt"}>
         <h1 className={'title'}>
-            Cacaf'the le meilleur du cafe
+            Caf'the le meilleur du cafe
         </h1>
         <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit.</p>
     </div>
@@ -77,6 +77,37 @@ const HomePage = () => {
             <p className={"text"}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             </p>
+            <div className={'list--merit'}>
+
+                <div className={'box--merit'}>
+                    <div className={'box--merit_img'}>
+                        <img src={"./assets/images/bio--icon.png"}/>
+                    </div>
+                    <h4>Produits Bio</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et </p>
+                </div>
+
+                <div className={'box--merit'}>
+                    <div className={'box--merit_img'}>
+                        <img src={"./assets/images/bio--icon.png"}/>
+                    </div>
+                    <h4>Produits Bio</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et </p>
+                </div>
+
+                <div className={'box--merit'}>
+                    <div className={'box--merit_img'}>
+                        <img src={"./assets/images/bio--icon.png"}/>
+                    </div>
+                    <h4>Produits Bio</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et </p>
+                </div>
+
+
+            </div>
         </section>
     </main>
 

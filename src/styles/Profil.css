@@ -1,8 +1,65 @@
 @import "global.css";
 
 #s_profil {
-    padding: 50px;
+    padding: var(--pd-section);
 }
-#s_profil a {
-    padding: 100px 0;
+.title--profil {
+    font-size: var(--fz-h4);
+    font-weight: normal;
+}
+
+#container--info_profil, #container--command_profil {
+    margin-top: 50px;
+    padding: 50px 30px;
+    border: 1px solid #E6E6E6E6;
+    border-radius: 8px;
+
+}
+#container--info_profil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#container--info_profil h4 {
+    color: var(--color-bg--var);
+    font-size: 14px;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+#container--info_profil a {
+    color: var(--color-third);
+    font-weight: 500;
+}
+#container--info_profil .info--ads img {
+    /*height: 50%;*/
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    justify-self: end;
+    border-radius: 8px;
+}
+.profil--link {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+}
+.list--product {
+    width: 100%;
+    border-collapse: collapse;
+}
+.list--product thead th{
+    background: #F2F2F2;
+    text-transform: uppercase;
+    font-weight: 300;
+    padding: 10px 0;
+}
+
+
+
+@media (max-width: 426px) {
+    #container--info_profil .info--ads {
+        display: none;
+    }
 }

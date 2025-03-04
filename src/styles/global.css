@@ -9,6 +9,8 @@ html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body,ul,li,h1,h
     --color-secondary: #E55934;
     --color-third: #519872;
     --color-bg: #FDFFFC;
+    --color-bg--var: #999999;
+    --color-bg--var-2: rgba(253, 255, 252, 0.95);
     --color-text: #1F2130;
     --color-accentuation: #000;
     /* font */
@@ -24,6 +26,7 @@ html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}body,ul,li,h1,h
     --fz-p: 18px;
     /* border radius */
     --br-button: 5px;
+    --pd-section: 50px;
 }
 
 /* font */
@@ -56,12 +59,14 @@ section {
  .s_blue {
      background: var(--color-text);
  }
+
  .link--primary {
      color: var(--color-bg);
      background: var(--color-text);
      padding: 10px 65px;
      transition: color .2s ease-in-out, background .2s ease-in-out;
      outline: 2px solid var(--color-text);
+     cursor: pointer;
  }
  .link--primary:hover {
      background: var(--color-bg);
@@ -70,3 +75,9 @@ section {
  .logo {
      height: 40px;
  }
+
+@media (max-width: 424px) {
+    :root {
+        --pd-section: 25px;
+    }
+}

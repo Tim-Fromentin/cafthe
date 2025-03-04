@@ -3,6 +3,9 @@
     padding: 25px 25px;
     background: var(--color-bg);
     display: flex;
+    align-items: center;
+    z-index: 999;
+    list-style: none;
 }
 .mn_links {
     width: 100%;
@@ -10,9 +13,9 @@
     align-items: center;
 }
 .mn_link {
-
     margin: 0 50px;
 }
+
 .mn_link, .mn_button--log span {
     position: relative;
     z-index: 20;
@@ -48,7 +51,8 @@
 .mn_buttons {
     display: flex;
     justify-content: space-around;
-    width: 30%;
+    align-items: center;
+    width: 40%;
 }
 .mn_button img {
     height: 35px;
@@ -59,4 +63,110 @@
     display: flex;
     align-items: center;
     gap: 25px;
+}
+
+@media (max-width: 830px) {
+    .mn_link {
+        margin: 0 15px;
+    }
+    .mn_buttons {
+        display: flex;
+        justify-content: space-around;
+        width: 50%;
+    }
+}
+
+.mn_links--active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    height: calc(100vh - 93.2px);
+    padding: 25px;
+    width: 50%;
+    background: var(--color-bg--var-2);
+    z-index: 999;
+    left: 0;
+    top: 93.2px;
+}
+.btn_hamb {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    margin:0 25px;
+    transition: height .2s ease, transform .3s 0s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
+
+}
+.btn_hamb .line {
+    width: 100%;
+    height: 3px;
+    background: var(--color-text);
+    position: absolute;
+}
+
+.btn_hamb .line:nth-child(1) {
+    top: 0px;
+}
+.btn_hamb .line:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+.btn_hamb .line:nth-child(3){
+    bottom: 0;
+}
+
+.btn_hamb--active .line {
+    transition: height .3s ease, transform .3s .8s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
+}
+.btn_hamb .line {
+    transition: height .3s ease, transform .3s 0s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
+}
+
+.btn_hamb--active .line:nth-child(3){
+    /* height: 100%; */
+    opacity: 0;
+    animation: animClose5 0.8s 1 ease-in-out;
+}
+.btn_hamb--active .line:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%);
+
+    transform: rotate(45deg)
+}
+.btn_hamb--active .line:nth-child(2){
+    top: 50%;
+    transform: translateY(-50%);
+
+    transform: rotate(-45deg)
+}
+
+@keyframes animClose5 {
+    0%, 100% {
+        height: 0;
+        opacity: 1;
+    }
+    50%, 51% {
+        height: 100%;
+        opacity: 1;
+        background: rgb(54, 54, 54);
+    }
+}
+
+
+.btn_hamb {
+    display: none;
+}
+@media (max-width: 426px) {
+    .mn_links {
+        display: none;
+    }
+    .mn_buttons {
+        width: 80%;
+    }
+    .btn_hamb {
+        display: block;
+    }
+    #mainNav {
+        position: fixed;
+    }
 }

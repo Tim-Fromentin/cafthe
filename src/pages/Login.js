@@ -27,7 +27,7 @@ function Login(props) {
             login(token, client)
 
         //     Redirection d'un client vers une page
-            navigate("/")
+            navigate("/profil")
         } catch (error) {
             console.error('Erreur lors de la connexion : ', error);
             if (error.response.data.message){

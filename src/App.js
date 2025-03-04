@@ -17,6 +17,10 @@ import Register from "./pages/Register";
 import Modif from "./pages/Modif";
 import ModifPass from "./pages/ModifPass";
 import Command from "./pages/Command";
+import CGU from "./pages/CGU";
+import CGV from "./pages/CGV";
+import DeleteAccount from "./pages/DeleteAccount";
+
 
 
 function App() {
@@ -55,8 +59,17 @@ function App() {
             <Route path="/profil/modifPass" element={<Layout />}>
                 <Route index element={<ModifPass />} />
             </Route>
+            <Route path="/profil/DeleteAccount" element={<Layout />}>
+                <Route index element={<DeleteAccount />} />
+            </Route>
             <Route path="/panier" element={<Layout />}>
                 <Route index element={<Cart />} />
+            </Route>
+            <Route path="/Conditions-generales-d'utilisation" element={<Layout />}>
+                <Route index element={<CGU />} />
+            </Route>
+            <Route path="/Conditions-generales-de-vente" element={<Layout />}>
+                <Route index element={<CGV />} />
             </Route>
           {/*Si la route n'est pas trouver renvoie vers le components notfound sois 404*/}
           <Route path="*" element={<NotFound />} />

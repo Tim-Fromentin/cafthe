@@ -10,14 +10,50 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    border-radius: 5px;
+    position: relative;
 }
-.success-message {
+.add_cart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--color-bg);
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+.add_cart img {
+    height: 32px;
+    width: 32px;
+    color: var(--color-bg);
+}
+.product_image {
+    height: 150px;
+}
+.success-message, .error-message {
     position: fixed;
-    top: 100px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--color-third);
     z-index: 999;
     padding: 25px 100px;
     border-radius: 15px;
+}
+.success-message {
+    background: var(--color-third);
+}
+.error-message {
+    background: var(--color-secondary);
+}
+.see_details {
+    padding: 10px;
+    border: 1px solid var(--color-bg);
+    transition: color .3s ease-in-out, background .3s ease-in-out;
+}
+.see_details:hover {
+    background: var(--color-bg);
+    color: var(--color-text);
 }

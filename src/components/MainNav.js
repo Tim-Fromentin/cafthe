@@ -1,26 +1,41 @@
 import {AuthContext} from "../context/AuthContext";
-import {Link, NavLink} from "react-router-dom";
-import React, {useContext} from 'react';
+import {NavLink} from "react-router-dom";
+import React, {useContext, useState} from 'react';
 import ('../styles/global.css')
 import ('../styles/MainNav.css')
 
 const MainNav = () => {
     const {client, isAuthenticated, logout} = useContext(AuthContext)
+    const [isOpen, setIsOpen] = useState(false);
     console.log(client)
     const handleLogout = () => {
         logout();
     }
-    function cartCounter() {
-        console.log('f')
+    // function cartCounter() {
+    //     console.log('f')
+    // }
+    function handleHamb() {
+        if (isOpen === false){
+        setIsOpen(true)
+        } else if (isOpen === true) {
+            setIsOpen(false)
+        }
     }
     return (
-        <nav id={'mainNav'} onLoad={cartCounter}>
-            <ul className={'mn_links'}>
-                <li className={''}>
-                    <a href={'#'}>
-                        <img className={'logo'} src={'./assets/images/coffee--bean.png'} />
-                    </a>
-                </li>
+        <nav id={'mainNav'} >
+            <li className={''}>
+                <a href={'#'}>
+                    <img className={'logo'} src={'./assets/images/coffee--bean.png'}/>
+                </a>
+            </li>
+            <li>
+                <div className={isOpen ? "btn_hamb--active btn_hamb" : "btn_hamb"} onClick={handleHamb}>
+                    <div className={'line'}></div>
+                    <div className={'line'}></div>
+                    <div className={'line'}></div>
+                </div>
+            </li>
+            <ul className={isOpen ? "mn_links--active" : "mn_links"}>
 
 
                 <NavLink to="/"
@@ -41,7 +56,6 @@ const MainNav = () => {
                 </NavLink>
 
 
-
                 <NavLink to="/Contact"
                          className={(nav) =>
                              (nav.isActive ? "mn_link--active mn_link" : "mn_link")
@@ -53,7 +67,7 @@ const MainNav = () => {
             <ul className={'mn_buttons'}>
                 <li className={'mn_button'}>
                     <NavLink to="/panier" className={(footer) => (footer.isActive ? "mn_button" : "mn_button")}>
-                    <img src={'./assets/images/cart--icon.png'} />
+                        <img src={'./assets/images/cart--icon.png'}/>
 
                     </NavLink>
                 </li>
@@ -75,12 +89,12 @@ const MainNav = () => {
 
                             <span>Voir le profil
                             </span>
-                        {/*<button onClick={handleLogout}>logout</button>*/}
+                            {/*<button onClick={handleLogout}>logout</button>*/}
                         </NavLink>
                     ) : (
                         <NavLink to={'/login'}
-                              className={(nav) =>
-                                  (nav.isActive ? "mn_button--log mn_button--log--active" : "mn_button--log")}
+                                 className={(nav) =>
+                                     (nav.isActive ? "mn_button--log mn_button--log--active" : "mn_button--log")}
                         >
                             <img src={'./assets/images/user--icon.png'}/>
 
