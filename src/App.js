@@ -20,6 +20,8 @@ import Command from "./pages/Command";
 import CGU from "./pages/CGU";
 import CGV from "./pages/CGV";
 import DeleteAccount from "./pages/DeleteAccount";
+import FirstConn from "./pages/FirstConn";
+import ProductListByCategorie from "./pages/ProductListByCategorie";
 
 
 
@@ -58,6 +60,12 @@ function App() {
             </Route>
             <Route path="/profil/modifPass" element={<Layout />}>
                 <Route index element={<ModifPass />} />
+            </Route>
+            <Route path="/firstConn" element={<Layout />}>
+                <Route index element={<FirstConn />} />
+            </Route>
+            <Route path="/ProductListByCategorie/:id" element={<Layout />}>
+                <Route index element={<ProductListByCategorie />} />
             </Route>
             <Route path="/profil/DeleteAccount" element={<Layout />}>
                 <Route index element={<DeleteAccount />} />

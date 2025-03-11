@@ -4,6 +4,7 @@ import {NavLink, Link} from "react-router-dom";
 import '../styles/Profil.css'
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
+import DontConnect from "../components/DontConnect";
 
 function Profil(props) {
     const {client, isAuthenticated, logout} = useContext(AuthContext)
@@ -107,7 +108,7 @@ function Profil(props) {
 
                 ) : (
                     <>
-                        <h1>Vous n'etes pas connecter</h1>
+                        <DontConnect />
                     </>
                 )}
 

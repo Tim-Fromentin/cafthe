@@ -157,8 +157,21 @@ function Cart(props) {
 
     const commandId = products.length > 0 ? products[0].command_id : null;
 
+    const [choice, setChoice] = useState('no')
+    function handleChoice(element){
+        console.log(element.target.value)
+        if (element.target.value === 'no'){
+            setChoice('no')
+            setAdress(element.target.value)
+        } else {
+            setChoice('yes')
+            setAdress(client?.adresse)
+        }
+    }
+const [adress, setAdress] = useState('')
+    const handlePaid = async (event) => {
+        event.preventDefault(); // Empêcher le rechargement de la page
 
-    const handlePaid = async (commandId) => {
         setErrorMsg('');
         setSuccessMsg('');
 
@@ -169,14 +182,25 @@ function Cart(props) {
 
         try {
             const clientId = client.id;
+            // Adresse à utiliser selon le choix
+            const addressToUse = choice === 'yes' ? client?.adresse : document.getElementById('newAdress').value;
+
+            // Vérification que l'adresse n'est pas vide
+            if (!addressToUse) {
+                setErrorMsg('Veuillez spécifier une adresse de livraison.');
+                return;
+            }
+
+            const response = await axios.post("http://localhost:3000/api/client/cart/paid", {
+                command_id: commandId,
+                adress: addressToUse
+            });
+
             setSuccessMsg('Panier payé !');
 
-            await axios.post("http://localhost:3000/api/client/cart/paid", {
-
-                command_id: commandId
-
-            });
-            window.location.reload()
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
 
         } catch (error) {
             console.error('Erreur lors du paiement :', error);
@@ -190,9 +214,9 @@ function Cart(props) {
 
 
 
-
     return (
         <main>
+            <h1>{choice}, {adress}</h1>
             <section id={'s_cart'}>
                 <h1 className={"surtitle--b"}>Votre panier</h1>
                 <div className={'cart--list'}>
@@ -249,25 +273,31 @@ function Cart(props) {
 
                 </div>
                 <div>
-                    <h3>
-                        Livrez a votre adresse ?
-                    </h3>
-                    <label htmlFor="yes">Oui</label>
-                    <input type="radio" id="yes" name="choice_adress" value="yes"/>
+                    <form onSubmit={(e) => handlePaid(e)}>
+                        <h3>
+                            Livrez a votre adresse ?
+                        </h3>
+                        <label htmlFor="yes">Oui</label>
+                        <input type="radio" id="yes" name="choice_adress" value="yes" onClick={handleChoice}/>
 
-                    <label htmlFor="no">Non</label>
-                    <input type="radio" id="no" name="choice_adress" value="no"/>
+                        <label htmlFor="no">Non</label>
+                        <input type="radio" id="no" name="choice_adress" value="no" onClick={handleChoice}/>
 
-                        <p>Adresse :
+                        <p>Adresse :</p>
+
+                        {choice === "yes" ? (
                             <span>{client?.adresse || "Adresse non renseignée"}</span>
-                        </p>
+                        ) : (
+                            <>
+                                <label htmlFor="newAdress">Adresse de livraison</label>
+                                <input type="text" id="newAdress" />
+                            </>
+                        )}
 
-                    <label htmlFor={'newAdress'}>
-                    Adresse de livraison
-                    </label>
-                    <input type={'text'} id={'newAdress'}/>
 
-                    <button onClick={() => handlePaid(commandId)}>Payer</button>
+                        <button>Payer</button>
+                    </form>
+
                 </div>
 
             </section>

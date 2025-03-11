@@ -169,4 +169,7 @@
     #mainNav {
         position: fixed;
     }
+    .mn_button--log span {
+        display: none;
+    }
 }

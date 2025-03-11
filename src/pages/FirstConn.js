@@ -1,39 +1,37 @@
 import React, {useContext, useState} from 'react';
-import '../styles/login.css'
-import  '../styles/global.css'
-import axios from "axios";
-import {AuthContext} from "../context/AuthContext";
 import {NavLink, useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/AuthContext";
+import axios from "axios";
 
-function Login(props) {
+function FirstConn(props) {
     const {login} = useContext(AuthContext) // function login venant du contexte
     const navigate = useNavigate()
     const [client_email, setClient_email] = useState('')
     const [client_password, setClient_password] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
-    const handleSubmit= async (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMsg('')
 
         try {
-            const response = await axios.post("http://localhost:3000/api/clients/login", {
-                client_email,
-                client_password
-            })
-            const { token, client } = response.data
 
-        //     on met a jour le contexte d'authendification
-            login(token, client)
+            console.log("Données envoyées à l'API :", { client_email: client_email, client_password: client_password  });
 
-        //     Redirection d'un client vers une page
-            navigate("/profil")
+            const response = await axios.put("http://localhost:3000/api/client_first_conn/", {
+                client_email: client_email, NewPass: client_password
+            });
+            navigate("/Login")
+
+            console.log("Réponse du serveur :", response);
         } catch (error) {
-            console.error('Erreur lors de la connexion : ', error);
-            if (error.response.data.message){
-                setErrorMsg(error.response.data.message)
+            console.error("Erreur lors dela  modif d'email : ", error);
+
+            if (error.response && error.response.data.message) {
+                setErrorMsg(error.response.data.message);
             } else {
-                setErrorMsg('Erreur')
+                setErrorMsg('Erreur');
             }
         }
     }
@@ -42,19 +40,21 @@ function Login(props) {
             <section id={'s_login'}>
 
                 <form onSubmit={handleSubmit}>
-                    <h1>Se connecter</h1>
+                    <h1>Premiere connexion</h1>
                     <label htmlFor={'email'}>Votre email</label>
                     <input
                         type={'email'}
                         id={'email'}
                         value={client_email}
-                        onChange={ (e) => { setClient_email(e.target.value) } } />
+                        onChange={(e) => {
+                            setClient_email(e.target.value)
+                        }}/>
 
                     <label htmlFor={'password'}>Mot de passe</label>
                     <input type={'password'} id={'password'} value={client_password}
-                    onChange={(e) => {
-                        setClient_password(e.target.value)
-                    }}
+                           onChange={(e) => {
+                               setClient_password(e.target.value)
+                           }}
                     />
 
                     {errorMsg && (
@@ -62,13 +62,10 @@ function Login(props) {
                     )}
 
                     <button type={'submit'} className={'link--primary'}>
-                        Se connecter
+                        Créer son mot de passe
                     </button>
                     <NavLink to={'/register'}>
                         Pas encore de compte ?
-                    </NavLink>
-                    <NavLink to={'/firstConn'}>
-                        Premiére connexion ?
                     </NavLink>
                 </form>
 
@@ -82,4 +79,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default FirstConn;

@@ -80,7 +80,7 @@
     margin-top: 50px;
 }
 #s_h_product_list {
-    padding: 50px;
+    padding: var(--pd-section);
     text-align: center;
 }
 .hp_box_txt {

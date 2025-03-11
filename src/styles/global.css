@@ -72,12 +72,51 @@ section {
      background: var(--color-bg);
      color: var(--color-text);
  }
+ .link--secondary {
+     position: relative;
+     padding: 10px 0;
+ }
+ .link--secondary::before {
+     content: '';
+     background: var(--color-bg);
+     position: absolute;
+     bottom: 0px;
+     left: 0;
+     width: 35%;
+     height: 3px;
+     transition: width .3s ease-in-out;
+ }
+.link--secondary::after {
+     content: '';
+     background: var(--color-bg);
+     position: absolute;
+     bottom: 0px;
+    right: 0;
+     width: 0%;
+     height: 3px;
+    transition: width .3s ease-in-out;
+ }
+.link--secondary:hover::before {
+    width: 10%;
+}
+.link--secondary:hover::after {
+    width: 80%;
+}
  .logo {
      height: 40px;
  }
 
-@media (max-width: 424px) {
+@media (max-width: 426px) {
     :root {
         --pd-section: 25px;
+        --fz-h2: 40px;
+        --fz-h4: 30px;
+    }
+}
+@media (max-width: 375px) {
+    :root {
+        --pd-section: 10px;
+        --fz-h2: 30px;
+        --fz-h4: 25px;
     }
 }
