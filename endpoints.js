@@ -408,7 +408,12 @@ router.post("/products/addCart", (req, res) => {
                             console.log("Mise à jour de la quantité:", new_quantity);
 
                             db.query(
-                                "UPDATE command_lines SET command_quantity = ? WHERE command_line_id = ?",
+                                `UPDATE command_lines
+JOIN products ON products.product_serial_number = command_lines.product_serial_number
+SET command_quantity = ?
+WHERE command_line_id = ?
+AND products.product_stock > command_lines.command_quantity;
+`,
                                 [new_quantity, result[0].command_line_id],
                                 (err, result) => {
                                     if (err) {
@@ -565,7 +570,6 @@ router.post('/client/cart/paid', (req, res) => {
         return res.status(400).json({ message: "Command ID manquant" });
     }
 
-    // Correction de l'ordre des paramètres
     db.query(`UPDATE commands SET command_statut = 0, command_adress = ?
               WHERE command_id = ?`, [adress, command_id],
         (err, result) => {
@@ -612,7 +616,7 @@ router.post("/client/commands", (req, res) => {
     }
 
     db.query(
-        `SELECT commands.*
+        `SELECT DISTINCT commands.command_id, commands.client_id
          FROM commands
                   JOIN clients ON clients.client_id = commands.client_id
                   JOIN command_lines ON command_lines.command_id = commands.command_id
@@ -629,6 +633,33 @@ router.post("/client/commands", (req, res) => {
         }
     );
 });
+
+router.get("/client/command/:id", (req, res) => {
+    const { client_id } = req.query;  // Récupère client_id depuis les paramètres de la requête GET
+    const id = parseInt(req.params.id);  // Récupère l'ID de la commande depuis les paramètres de l'URL
+
+    if (!client_id) {
+        return res.status(400).json({ message: "Client ID manquant" });
+    }
+
+    db.query(
+        `SELECT * FROM commands WHERE command_id = ? AND client_id = ?`,
+        [id, client_id],  // On passe l'ID de la commande et le client_id pour filtrer les commandes
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Erreur du serveur" });
+            }
+            if (!result || result.length === 0) {
+                return res.status(404).json({ message: "Aucune commande trouvée" });
+            }
+            res.json(result);
+        }
+    );
+});
+
+
+
+
 
 
 // FINISH supprimer ligne panier
