@@ -13,7 +13,7 @@ function ProductListByCategories(props) {
     useEffect(() => {
         const fetchProductDetail = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/products/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/${id}`);
                 console.log(response.data)
                 setProductDetails(response.data);
             } catch (error){

@@ -14,7 +14,7 @@ function ProductDetails(props) {
     useEffect(() => {
         const fetchProductDetail = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/product/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/product/${id}`);
                 console.log(response.data)
                 setProduct(response.data);
             } catch (error){
@@ -47,6 +47,9 @@ function ProductDetails(props) {
                     </p>
                     <p>
                         Poids : {product.product_weight}
+                    </p>
+                    <p>
+                        Stocks : {product.product_stock}
                     </p>
                     <p>
                         Catégorie : {product.product_categorie_name}

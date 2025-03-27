@@ -7,7 +7,7 @@ function BestProduct(props) {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/best_product/`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/best_product/`);
                 setProducts(response.data);
             } catch (error){
                 console.error("Erreur de chargement des produits")

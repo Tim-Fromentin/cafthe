@@ -24,7 +24,7 @@ function Profil() {
 
             console.log("Données envoyées à l'API :", { NewPass: newPassword, client_id: clientId });
 
-            const response = await axios.put("http://localhost:3000/api/client_modif_pass/", {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/client_modif_pass/`, {
                 NewPass: newPassword,
                 client_id: clientId,
             });

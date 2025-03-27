@@ -25,7 +25,7 @@ function Cart(props) {
         const fetchProducts = async () => {
             try {
                 console.log("Fetching products for client ID:", client.id);
-                const response = await axios.post("http://localhost:3000/api/client/cart", {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/cart`, {
                     client_id: client.id
                 });
 
@@ -42,17 +42,20 @@ function Cart(props) {
 
 
     const productId = products.product_serial_number
+    const stock = products.product_stock
+    console.log(stock)
 
     const [errorMsg, setErrorMsg] = useState('')
 
     const handleAdd = async (productSerialNumber) => {
         setErrorMsg('')
+
         try {
             const clientId = client.id;
 
             console.log("Données envoyées à l'API :", { product_serial_number: productSerialNumber, client_id: clientId });
 
-            const response = await axios.post("http://localhost:3000/api/client/cart/updateQuantityMore", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/cart/updateQuantityMore`, {
                 product_serial_number: productSerialNumber,
                 client_id: clientId,
             });
@@ -78,7 +81,7 @@ function Cart(props) {
 
             console.log("Données envoyées à l'API :", { product_serial_number: productSerialNumber, client_id: clientId });
 
-            const response = await axios.post("http://localhost:3000/api/client/cart/updateQuantityLess", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/cart/updateQuantityLess`, {
                 product_serial_number: productSerialNumber,
                 client_id: clientId,
             });
@@ -110,7 +113,7 @@ function Cart(props) {
             console.log("Données envoyées à l'API :", { command_line_id: commandLineId, client_id: clientId });
 
 
-            const response = await axios.delete("http://localhost:3000/api/client/cart/deleteLine", {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/client/cart/deleteLine`, {
                 data: {
 
                 command_line_id : commandLineId,
@@ -138,7 +141,7 @@ function Cart(props) {
     console.log(products)
 
     console.log("Client dans Cart.js :", client);
-    console.log("Command ID :", client?.command_id);
+    console.log("Command.css ID :", client?.command_id);
 
 
 
@@ -191,7 +194,7 @@ const [adress, setAdress] = useState('')
                 return;
             }
 
-            const response = await axios.post("http://localhost:3000/api/client/cart/paid", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/cart/paid`, {
                 command_id: commandId,
                 adress: addressToUse
             });
@@ -216,7 +219,6 @@ const [adress, setAdress] = useState('')
 
     return (
         <main>
-            <h1>{choice}, {adress}</h1>
             <section id={'s_cart'}>
                 <h1 className={"surtitle--b"}>Votre panier</h1>
                 <div className={'cart--list'}>
@@ -243,6 +245,7 @@ const [adress, setAdress] = useState('')
                                             </button>
                                             {product.command_quantity}
                                             <button onClick={() => handleAdd(product.product_serial_number)}>+</button>
+                                            {product.product_stock} max
                                         </div>
                                         <button onClick={() => handleDelete(product.command_line_id)}
                                                 className="cart_btn--delete">

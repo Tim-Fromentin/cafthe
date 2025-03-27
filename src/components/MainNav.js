@@ -25,7 +25,7 @@ const MainNav = () => {
         <nav id={'mainNav'} >
             <li className={''}>
                 <a href={'#'}>
-                    <img className={'logo'} src={'./assets/images/coffee--bean.png'}/>
+                    <img className={'logo'} src={'../assets/images/coffee--bean.png'}/>
                 </a>
             </li>
             <li>
@@ -67,7 +67,7 @@ const MainNav = () => {
             <ul className={'mn_buttons'}>
                 <li className={'mn_button'}>
                     <NavLink to="/panier" className={(footer) => (footer.isActive ? "mn_button" : "mn_button")}>
-                        <img src={'./assets/images/cart--icon.png'}/>
+                        <img src={'../assets/images/cart--icon.png'}/>
 
                     </NavLink>
                 </li>
@@ -85,7 +85,7 @@ const MainNav = () => {
                                  className={(nav) =>
                                      (nav.isActive ? "mn_button--log mn_button--log--active" : "mn_button--log")}
                         >
-                            <img src={'./assets/images/user--icon.png'}/>
+                            <img src={'../assets/images/user--icon.png'}/>
 
                             <span>Voir le profil
                             </span>
@@ -96,7 +96,7 @@ const MainNav = () => {
                                  className={(nav) =>
                                      (nav.isActive ? "mn_button--log mn_button--log--active" : "mn_button--log")}
                         >
-                            <img src={'./assets/images/user--icon.png'}/>
+                            <img src={'../assets/images/user--icon.png'}/>
 
                             <span>Se connecter</span>
                         </NavLink>

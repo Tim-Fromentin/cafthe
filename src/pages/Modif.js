@@ -17,6 +17,7 @@ function Profil() {
 
     // Log le nouvel email à chaque changement
     useEffect((e) => {
+
         console.log("Nouvel email :", newEmail);
         console.log('Nouvel adress :', newAdress)
     }, [newEmail, newAdress]); // Se déclenche uniquement quand `newEmail` change
@@ -33,12 +34,21 @@ function Profil() {
 
             console.log("Données envoyées à l'API :", { Newemail: newEmail, NewAdress: newAdress, client_id: clientId });
 
-            const response = await axios.put("http://localhost:3000/api/client_modif/", {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/client_modif/`, {
                 Newemail: newEmail,
                 NewAdress: newAdress,
                 client_id: clientId,
             });
+            // recup les donnes de locastorage, refaire l'objet client mise a jour
 
+            const storedClient = JSON.parse(localStorage.getItem("client"));
+            localStorage.setItem('client', JSON.stringify({
+                ...storedClient,
+                email: newEmail,
+                adresse: newAdress
+            }));
+
+    window.location.reload();
             console.log("Réponse du serveur :", response);
         } catch (error) {
             console.error("Erreur lors dela  modif d'email : ", error);

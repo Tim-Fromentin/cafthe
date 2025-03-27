@@ -41,7 +41,7 @@ function CartButton({ product }) {
             const clientId = client.id;
             setSuccessMsg('Produit ajouté au panier !');
 
-            await axios.post("http://localhost:3000/api/products/addCart", {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/products/addCart`, {
                 product_serial_number: productId,
                 client_id: clientId,
             });

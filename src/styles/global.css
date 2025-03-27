@@ -102,6 +102,39 @@ section {
 .link--secondary:hover::after {
     width: 80%;
 }
+.link--third {
+    position: relative;
+    padding: 10px 25px;
+    transition: color.2s .2s;
+
+}
+.link--third:hover {
+    color: var(--color-bg);
+}
+.link--third::before {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 3px;
+    bottom: -2px;
+    left: 0;
+    background: var(--color-third);
+    transition: width .2s;
+}
+.link--third::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: var(--color-text);
+    z-index: -1;
+    transition: width .2s .2s;
+}
+.link--third:hover:after, .link--third:hover::before {
+    width: 100%;
+}
  .logo {
      height: 40px;
  }

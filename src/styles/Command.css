@@ -1,0 +1,15 @@
+@import "global.css";
+#s_command {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#info--command {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background: var(--color-text);
+    color: var(--color-bg);
+}

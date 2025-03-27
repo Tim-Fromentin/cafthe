@@ -79,6 +79,9 @@ function App() {
             <Route path="/Conditions-generales-de-vente" element={<Layout />}>
                 <Route index element={<CGV />} />
             </Route>
+            <Route path="/command/:id" element={<Layout />}>
+                <Route index element={<Command />} />
+            </Route>
           {/*Si la route n'est pas trouver renvoie vers le components notfound sois 404*/}
           <Route path="*" element={<NotFound />} />
         </Routes>

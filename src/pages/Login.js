@@ -11,13 +11,19 @@ function Login(props) {
     const [client_email, setClient_email] = useState('')
     const [client_password, setClient_password] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
+    const [tryConnect, setTryConnect] = useState(0)
+    // localStorage.setItem('try', tryConnect)
 
     const handleSubmit= async (e) => {
         e.preventDefault()
         setErrorMsg('')
-
+        // setTryConnect(tryConnect + 1)
+        if (client_email === '' || client_password === '') {
+            setErrorMsg("Tout les champs sont requis");
+            return;
+        }
         try {
-            const response = await axios.post("http://localhost:3000/api/clients/login", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/clients/login`, {
                 client_email,
                 client_password
             })
@@ -28,6 +34,7 @@ function Login(props) {
 
         //     Redirection d'un client vers une page
             navigate("/profil")
+            // setTryConnect(0)
         } catch (error) {
             console.error('Erreur lors de la connexion : ', error);
             if (error.response.data.message){
@@ -38,6 +45,7 @@ function Login(props) {
         }
     }
     return (
+
         <main>
             <section id={'s_login'}>
 

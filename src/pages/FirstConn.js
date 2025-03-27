@@ -19,7 +19,7 @@ function FirstConn(props) {
 
             console.log("Données envoyées à l'API :", { client_email: client_email, client_password: client_password  });
 
-            const response = await axios.put("http://localhost:3000/api/client_first_conn/", {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/client_first_conn/`, {
                 client_email: client_email, NewPass: client_password
             });
             navigate("/Login")

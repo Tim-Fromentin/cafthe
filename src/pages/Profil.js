@@ -17,13 +17,13 @@ function Profil(props) {
 
     useEffect(() => {
         const fetchPCommands = async () => {
-            if (!client?.id) return; // Vérifier que client.id est défini
+            if (!client?.id) return;
             try {
-                const response = await axios.post(`http://localhost:3000/api/client/commands`, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/commands`, {
                     client_id: client.id
                 });
                 setCommand(response.data);
-                console.log('Commandes chargées avec succès !', response.data);
+                console.log('Commandes charger avec succes !', response.data);
             } catch (error) {
                 console.error("Erreur de chargement des commandes", error);
             }
@@ -70,33 +70,20 @@ function Profil(props) {
                                 <tr>
                                     <th>Numero de commande</th>
                                     <th>Date</th>
-                                    <th>Total</th>
-                                    <th>Statut</th>
+                                    <th>En voir plus</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th>#1</th>
-                                    <td>8 Sep, 2023</td>
-                                    <td>42.00€ (3 Products)</td>
-                                    <td>
-                                        <span>
-
-                                        En cours
-                                        </span>
-                                        <a>Voir détails</a>
-
-                                    </td>
-                                </tr>
-                                {commands.map((command) => <tr>
+                                {commands.map((command) => (<tr key={command.command_id}>
 
 
                                         <th key={command.command_id}>#{command.command_id}</th>
                                         <td>8 Sep, 2023</td>
-                                        <td>{command.command_total}€ (3 Products)</td>
+                                        <td>
+                                            <a href={`command/${command.command_id}`}>Voir commande</a>
+                                        </td>
 
-
-                                    </tr>
+                                    </tr>)
                                 )}
                                 </tbody>
                             </table>

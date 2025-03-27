@@ -20,7 +20,7 @@ function DeleteAccount(props) {
 
             console.log("Données envoyées à l'API :", {client_id: clientId });
 
-            const response = await axios.put("http://localhost:3000/api/client_del/", {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/client_del/`, {
                 client_id: clientId,
             });
             logout();

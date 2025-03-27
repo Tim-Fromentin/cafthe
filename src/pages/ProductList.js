@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard";
 import "react-loading-skeleton/dist/skeleton.css"
 import Skeleton from "react-loading-skeleton";
 import '../styles/productList.css'
+import {Link} from "react-router-dom";
 
 function ProductList(props) {
     const [products, setProducts] = useState([])
@@ -20,7 +21,7 @@ function ProductList(props) {
         const fetchProducts = async () => {
             if (!filter) setFilter('asc');
             try {
-                const response = await axios.get(`http://localhost:3000/api/products?filter=${filter}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/products?filter=${filter}`);
                 setProducts(response.data);
             } catch (error){
                 console.error("Erreur de chargement des produits")
@@ -65,8 +66,10 @@ function ProductList(props) {
 
 
     return (
-        <section id={'s_product--list'}>
-            <div className={'filter--opt'}>
+        <>
+            <meta name="description" content="Helmet application"/>
+            <section id={'s_product--list'}>
+                <div className={'filter--opt'}>
                 <div>
                 <span>Filtrer par</span>
                     <select className={'filter--select'} onChange={handleChange}>
@@ -76,6 +79,18 @@ function ProductList(props) {
                 </div>
                 <span>{products.length} Produits trouver</span>
 
+            </div>
+            <div className={'categorie_list'}>
+                <Link to={`/products`} className={'link--third'}>Tout</Link>
+                <Link to={`/ProductListByCategorie/2`} className={'link--third'}>
+                    Café</Link>
+                <Link to={`/ProductListByCategorie/1`} className={'link--third'}>
+                    Thé</Link>
+                <Link to={`/ProductListByCategorie/3`} className={'link--third'}>
+                    Accessoires</Link>
+                <Link to={`/ProductListByCategorie/4`} className={'link--third'}>
+                    Tisanes</Link>                <Link to={`/ProductListByCategorie/5`} className={'link--third'}>
+                    Équipements</Link>
             </div>
 
             <div className={'product--list'}>
@@ -113,6 +128,7 @@ function ProductList(props) {
 
             </div>
         </section>
+        </>
     );
 }
 

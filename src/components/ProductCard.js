@@ -25,23 +25,50 @@ function ProductCard({ product }) {
         }
     }, [successMsg, errorMsg]);
 
-    const handleAdd = async () => {
+    const [products, setProducts] = useState();
+    useEffect(() => {
+        if (!client || !client.id) {
+            console.warn("Client non défini, on ne charge pas le panier");
+            return;
+        }
+
+        const fetchProducts = async () => {
+            try {
+                console.log("Fetching products for client ID:", client.id);
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/cart`, {
+                    client_id: client.id
+                });
+
+                console.log("Produits reçus:", response.data);
+                console.log(response.data.command_total_price)
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Erreur de chargement du panier", error);
+            }
+        };
+
+        fetchProducts();
+    }, [client]);
+
+    const handleAdd = async (product_stock) => {
         setErrorMsg('');
         setSuccessMsg('');
-
+        console.log(product_stock)
         if (!isAuthenticated) {
             setErrorMsg('Veuillez vous connecter pour ajouter un produit au panier.');
             return;
         }
 
         try {
+            console.log(products)
             const clientId = client.id;
             setSuccessMsg('Produit ajouté au panier !');
 
-            await axios.post("http://localhost:3000/api/products/addCart", {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/products/addCart`, {
                 product_serial_number: productId,
                 client_id: clientId,
             });
+
 
         } catch (error) {
             console.error('Erreur lors de l\'ajout au panier :', error);
@@ -51,9 +78,10 @@ function ProductCard({ product }) {
                 setErrorMsg('Une erreur est survenue. Veuillez réessayer.');
             }
         }
+
     };
     let image = product.product_img || "coffee.png";
-    const productImage = `./assets/images/products/${image}`;
+    const productImage = `../assets/images/products/${image}`;
 
 
 
@@ -69,8 +97,8 @@ function ProductCard({ product }) {
             <p>{product.product_price} $ TTC</p>
             <p>{product.product_categorie_name}</p>
             <Link to={`/product/${product.product_serial_number}`} className={'see_details'}>Voir détails</Link>
-            <button onClick={handleAdd} className={'add_cart'}>
-                <img src={'./assets/images/cart-icon--card.svg'}/>
+            <button onClick={() => {handleAdd(product.product_stock)}} className={'add_cart'}>
+                <img src={'../assets/images/cart-icon--card.svg'}/>
             </button>
         </div>
     );

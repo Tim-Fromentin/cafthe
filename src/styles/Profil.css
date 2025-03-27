@@ -56,7 +56,9 @@
     padding: 10px 0;
 }
 
-
+.list--product td {
+    text-align: center;
+}
 
 @media (max-width: 426px) {
     #container--info_profil .info--ads {

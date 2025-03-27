@@ -7,7 +7,7 @@ const MainFooter = () => {
         <footer id={'main_footer'}>
         <ul className={'c_1'}>
             <li className={'r_1 title--footer'}>
-                <img className={'logo'} src={'./assets/images/coffee--bean.png'}/>
+                <img className={'logo'} src={'../assets/images/coffee--bean.png'}/>
             <h3>CAF'THE</h3>
             </li>
             <li className={'r_2'}>
@@ -55,21 +55,30 @@ const MainFooter = () => {
                     Nos produits
                 </li>
                 <li className={'r_2'}>
-                    <NavLink to="/">
-                        Cafe
+                    <NavLink to="/ProductListByCategorie/2">
+                        Cafés
                     </NavLink>
                 </li>
                 <li className={'r_3'}>
-                    <NavLink to="/products">
-                        The
+                    <NavLink to="/ProductListByCategorie/1">
+                        Thés
                     </NavLink>
                 </li>
                 <li className={'r_4'}>
-                    <NavLink to="/contact">
-                        Accessoire
+                    <NavLink to="/ProductListByCategorie/3">
+                        Accessoires
                     </NavLink>
                 </li>
-
+                <li className={'r_5'}>
+                    <NavLink to="/ProductListByCategorie/4">
+                        Tisanes
+                    </NavLink>
+                </li>
+                <li className={'r_6'}>
+                    <NavLink to="/ProductListByCategorie/5">
+                        Équipements
+                    </NavLink>
+                </li>
             </ul>
         </footer>
     );

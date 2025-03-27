@@ -38,6 +38,7 @@ function Contact(props) {
                 </ul>
             </div>
         </section>
+
         </main>
     );
 }
