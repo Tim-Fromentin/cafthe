@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect, use} from 'react';
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import DontConnect from "../components/DontConnect";
 
 function Profil() {
     const { client, isAuthenticated } = useContext(AuthContext);
@@ -42,9 +43,9 @@ function Profil() {
     }
     return (
         <main>
-            <section>
-                {isAuthenticated ? (
                     <>
+                {isAuthenticated ? (
+            <section id={'sec_modif'}>
                         <span>Bonjour {client?.prenom}</span>
                         <form onClick={handleSubmit}>
                             <label htmlFor="password">Mot de passe</label>
@@ -60,11 +61,11 @@ function Profil() {
                             <button type={"submit"}>Valider les changement</button>
                         </form>
 
-                    </>
-                ) : (
-                    <h1>Vous n'êtes pas connecté</h1>
-                )}
             </section>
+                ) : (
+                    <DontConnect />
+                )}
+                    </>
         </main>
     );
 }

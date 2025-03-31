@@ -9,9 +9,9 @@ function NotFound(props) {
             <h1>Erreur 404</h1>
             <span>Une erreur est survenue. Si vous pensez avoir trouvé un bug, merci de contacter <a
                 href={'#'}>l'administrateur</a>.</span>
-            <NavLink to="/">
+            <NavLink to="/" className={'link--secondary'}>
 
-                <p className={'link--secondary'}>Retourner a l'Accueil</p>
+                Retourner a l'Accueil
             </NavLink>
         </section>
             <BestProduct />

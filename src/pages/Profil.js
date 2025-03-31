@@ -17,14 +17,18 @@ function Profil(props) {
 
     useEffect(() => {
         const fetchPCommands = async () => {
+            // Si l'id client n'est pas trouvé je ne return rien pour éviter les erreurs
             if (!client?.id) return;
             try {
+                // J'éxecute ma route d'information client avec comme paramétre l'id client récuperer par le Authcontext dans le localstorage
                 const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/client/commands`, {
                     client_id: client.id
                 });
+                // Si cela fonctionne je log un message de succes avec les informations recu
                 setCommand(response.data);
                 console.log('Commandes charger avec succes !', response.data);
             } catch (error) {
+                // Sinon je log un message d'erreur avec l'informations de l'erreur
                 console.error("Erreur de chargement des commandes", error);
             }
         };
@@ -50,7 +54,7 @@ function Profil(props) {
                                     <Link to={'/profil/Modif'}>Éditer votre compte</Link>
                                     <Link to={'/profil/ModifPass'}>Éditer votre mot de passe</Link>
                                     <Link to={'/profil/DeleteAccount'}>Supprimer votre compte</Link>
-                                    <button onClick={handleLogout} className={'link--primary'}>Deconnexion</button>
+                                    <button onClick={handleLogout} className={'link--primary'}>Déconnexion</button>
                                 </div>
 
                             </div>

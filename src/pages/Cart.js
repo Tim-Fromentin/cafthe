@@ -73,7 +73,7 @@ function Cart(props) {
     };
 
 
-       const handleRemove = async (productSerialNumber) => {
+    const handleRemove = async (productSerialNumber) => {
         setErrorMsg('')
         try {
             // if ()
@@ -116,8 +116,8 @@ function Cart(props) {
             const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/client/cart/deleteLine`, {
                 data: {
 
-                command_line_id : commandLineId,
-                client_id: clientId,
+                    command_line_id : commandLineId,
+                    client_id: clientId,
                 }
             });
 
@@ -160,18 +160,23 @@ function Cart(props) {
 
     const commandId = products.length > 0 ? products[0].command_id : null;
 
-    const [choice, setChoice] = useState('no')
-    function handleChoice(element){
+    // Modification ici: Remplacer "yes/no" par "domicile/magasin"
+    const [deliveryType, setDeliveryType] = useState('magasin')
+    const STORE_ADDRESS = "14 Rue du Commerce, 41000 Blois";
+
+    function handleDeliveryChoice(element){
         console.log(element.target.value)
-        if (element.target.value === 'no'){
-            setChoice('no')
-            setAdress(element.target.value)
+        setDeliveryType(element.target.value)
+
+        if (element.target.value === 'domicile'){
+            setAdress(client?.adresse || "")
         } else {
-            setChoice('yes')
-            setAdress(client?.adresse)
+            setAdress(STORE_ADDRESS)
         }
     }
-const [adress, setAdress] = useState('')
+
+    const [adress, setAdress] = useState(STORE_ADDRESS)
+
     const handlePaid = async (event) => {
         event.preventDefault(); // Empêcher le rechargement de la page
 
@@ -185,8 +190,10 @@ const [adress, setAdress] = useState('')
 
         try {
             const clientId = client.id;
-            // Adresse à utiliser selon le choix
-            const addressToUse = choice === 'yes' ? client?.adresse : document.getElementById('newAdress').value;
+            // Adresse à utiliser selon le choix de livraison
+            const addressToUse = deliveryType === 'domicile'
+                ? (client?.adresse || document.getElementById('newAdress').value)
+                : STORE_ADDRESS;
 
             // Vérification que l'adresse n'est pas vide
             if (!addressToUse) {
@@ -278,29 +285,33 @@ const [adress, setAdress] = useState('')
                 <div>
                     <form onSubmit={(e) => handlePaid(e)}>
                         <h3>
-                            Livrez a votre adresse ?
+                            Mode de livraison
                         </h3>
-                        <label htmlFor="yes">Oui</label>
-                        <input type="radio" id="yes" name="choice_adress" value="yes" onClick={handleChoice}/>
+                        <label htmlFor="domicile">À domicile</label>
+                        <input type="radio" id="domicile" name="choice_delivery" value="domicile" onClick={handleDeliveryChoice}/>
 
-                        <label htmlFor="no">Non</label>
-                        <input type="radio" id="no" name="choice_adress" value="no" onClick={handleChoice}/>
+                        <label htmlFor="magasin">En magasin</label>
+                        <input type="radio" id="magasin" name="choice_delivery" value="magasin" onClick={handleDeliveryChoice} defaultChecked/>
 
-                        <p>Adresse :</p>
+                        <p>Adresse de livraison :</p>
 
-                        {choice === "yes" ? (
-                            <span>{client?.adresse || "Adresse non renseignée"}</span>
+                        {deliveryType === "domicile" ? (
+                            client?.adresse ? (
+                                <span>{client.adresse}</span>
+                            ) : (
+                                <>
+                                    <label htmlFor="newAdress">Veuillez saisir votre adresse</label>
+                                    <input type="text" id="newAdress" />
+                                </>
+                            )
                         ) : (
-                            <>
-                                <label htmlFor="newAdress">Adresse de livraison</label>
-                                <input type="text" id="newAdress" />
-                            </>
+                            <span>{STORE_ADDRESS}</span>
                         )}
-
 
                         <button>Payer</button>
                     </form>
-
+                    {errorMsg && <p className="error-message">{errorMsg}</p>}
+                    {successMsg && <p className="success-message">{successMsg}</p>}
                 </div>
 
             </section>

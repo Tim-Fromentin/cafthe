@@ -77,29 +77,26 @@ section {
      padding: 10px 0;
  }
  .link--secondary::before {
-     content: '';
-     background: var(--color-bg);
-     position: absolute;
      bottom: 0px;
      left: 0;
      width: 35%;
-     height: 3px;
-     transition: width .3s ease-in-out;
  }
 .link--secondary::after {
+     bottom: 0px;
+    right: 0;
+     width: 0%;
+ }.link--secondary::after, .link--secondary::before {
      content: '';
      background: var(--color-bg);
      position: absolute;
      bottom: 0px;
-    right: 0;
-     width: 0%;
      height: 3px;
     transition: width .3s ease-in-out;
  }
-.link--secondary:hover::before {
+.link--secondary:hover::before, .link--secondary:focus::before {
     width: 10%;
 }
-.link--secondary:hover::after {
+.link--secondary:hover::after, .link--secondary:focus::after {
     width: 80%;
 }
 .link--third {

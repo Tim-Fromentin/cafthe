@@ -93,64 +93,45 @@
     height: 30px;
     width: 30px;
     position: relative;
-    margin:0 25px;
-    transition: height .2s ease, transform .3s 0s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
-
+    margin: 0 25px;
+    transition: height .2s ease, transform .3s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
 }
+
 .btn_hamb .line {
     width: 100%;
     height: 3px;
     background: var(--color-text);
     position: absolute;
+    transition: height .3s ease, transform .3s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
 }
 
-.btn_hamb .line:nth-child(1) {
-    top: 0px;
-}
+.btn_hamb .line:nth-child(1) { top: 0; }
 .btn_hamb .line:nth-child(2) {
     top: 50%;
     transform: translateY(-50%);
 }
-.btn_hamb .line:nth-child(3){
-    bottom: 0;
-}
+.btn_hamb .line:nth-child(3) { bottom: 0; }
 
-.btn_hamb--active .line {
-    transition: height .3s ease, transform .3s .8s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
-}
-.btn_hamb .line {
-    transition: height .3s ease, transform .3s 0s ease-in-out, opacity .5s .3s ease, top .2s ease-in-out;
-}
-
-.btn_hamb--active .line:nth-child(3){
-    /* height: 100%; */
+.btn_hamb--active .line:nth-child(3) {
     opacity: 0;
-    animation: animClose5 0.8s 1 ease-in-out;
+    animation: animClose 0.8s 1 ease-in-out;
 }
-.btn_hamb--active .line:nth-child(1) {
+
+.btn_hamb--active .line:nth-child(1),
+.btn_hamb--active .line:nth-child(2) {
     top: 50%;
-    transform: translateY(-50%);
-
-    transform: rotate(45deg)
-}
-.btn_hamb--active .line:nth-child(2){
-    top: 50%;
-    transform: translateY(-50%);
-
-    transform: rotate(-45deg)
+    transform: translateY(-50%) rotate(45deg);
 }
 
-@keyframes animClose5 {
-    0%, 100% {
-        height: 0;
-        opacity: 1;
-    }
-    50%, 51% {
-        height: 100%;
-        opacity: 1;
-        background: rgb(54, 54, 54);
-    }
+.btn_hamb--active .line:nth-child(2) {
+    transform: translateY(-50%) rotate(-45deg);
 }
+
+@keyframes animClose {
+    0%, 100% { height: 0; opacity: 1; }
+    50%, 51% { height: 100%; opacity: 1; background: rgb(54, 54, 54); }
+}
+
 
 
 .btn_hamb {

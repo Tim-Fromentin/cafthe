@@ -1,0 +1,27 @@
+@import "global.css";
+
+#sec_modif {
+    color: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#sec_modif form {
+    padding: 50px;
+    background: var(--color-text);
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 25px;
+}
+#sec_modif form input {
+    width: 100%;
+    padding: 10px;
+}
+#sec_modif form button {
+    background: var(--color-bg);
+    border: none;
+    padding: 10px 25px;
+    cursor: pointer;
+}

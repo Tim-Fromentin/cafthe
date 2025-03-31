@@ -1,6 +1,8 @@
 import React, {useContext, useState, useEffect, use} from 'react';
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import DontConnect from "../components/DontConnect";
+import '../styles/Modif.css';
 
 function Profil() {
     const { client, isAuthenticated } = useContext(AuthContext);
@@ -62,10 +64,9 @@ function Profil() {
     }
     return (
         <main>
-            <section>
-                {isAuthenticated ? (
                     <>
-                        <span>Bonjour {client?.prenom}</span>
+                {isAuthenticated ? (
+            <section id={'sec_modif'}>
                         <form onClick={handleSubmit}>
                             <label htmlFor="email">Email</label>
                             <input
@@ -84,11 +85,11 @@ function Profil() {
                             <button type={"submit"}>Valider les changement</button>
                         </form>
 
-                    </>
-                ) : (
-                    <h1>Vous n'êtes pas connecté</h1>
-                )}
             </section>
+                ) : (
+                    <DontConnect />
+                )}
+                    </>
         </main>
     );
 }
