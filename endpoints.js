@@ -204,7 +204,7 @@ router.post("/clients/register", (req,res) => {
     console.log(req.body)
     const {client_firstName, client_lastName, client_email, client_born_date, client_adress, client_password} = req.body
 
-    // met une verif ici ;on choux q lq creme
+    // met une verif ici
     db.query("SELECT * FROM clients WHERE client_email = ?", [client_email], (err, result) => {
 
         if(err){
@@ -634,9 +634,9 @@ router.post("/client/commands", (req, res) => {
     );
 });
 
-router.get("/client/command/:id", (req, res) => {
-    const { client_id } = req.query;  // Récupère client_id depuis les paramètres de la requête GET
-    const id = parseInt(req.params.id);  // Récupère l'ID de la commande depuis les paramètres de l'URL
+router.get("/client/command/:id", verifyToken, (req, res) => {
+    const { client_id } = req.query;
+    const id = parseInt(req.params.id);
 
     if (!client_id) {
         return res.status(400).json({ message: "Client ID manquant" });
@@ -644,7 +644,7 @@ router.get("/client/command/:id", (req, res) => {
 
     db.query(
         `SELECT * FROM commands WHERE command_id = ? AND client_id = ?`,
-        [id, client_id],  // On passe l'ID de la commande et le client_id pour filtrer les commandes
+        [id, client_id],
         (err, result) => {
             if (err) {
                 return res.status(500).json({ message: "Erreur du serveur" });
